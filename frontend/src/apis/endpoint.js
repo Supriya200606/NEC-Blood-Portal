@@ -90,14 +90,13 @@ export const getProfile = async () => {
 }
 
 export const showBloodRequestData = async(tag)=>{
-  const token = localStorage.getItem('token');
   try {
     const res = await fetch(`${GET_URL}?tag=${tag}`, {
       method: 'GET',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        
       }
     });
 
