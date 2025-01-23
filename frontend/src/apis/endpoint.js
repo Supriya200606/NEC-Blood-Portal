@@ -91,30 +91,25 @@ export const getProfile = async () => {
 
 export const showBloodRequestData = async(tag)=>{
   const token = localStorage.getItem('token');
-  const url = new URL(GET_URL);  
-  const params = new URLSearchParams({
-    tag: tag,
-  });
-  url.search = params.toString();  
-
   try {
-    const res =  await fetch(url ,{
-      method: "GET",
+    const res = await fetch(`${GET_URL}?tag=${tag}`, {
+      method: 'GET',
       credentials: 'include',
-
-      headers: { "Content-Type": "application/json",
+      headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
-       },
+      }
     });
+
     if (!res.ok) {
       const errorMessage = await res.text();
       throw new Error(`Failed to get profile: ${errorMessage}`);
     }
+
     const data = await res.json();
     return data;
   } catch (error) {
     throw error;
-
-}
+  }
 }
 
