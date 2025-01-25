@@ -8,7 +8,9 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+const cors = require('cors');
+app.use(cors({ origin: 'https://healthnet-3wdjw1465-sujans-projects-22ab35c5.vercel.app' })); 
+
 
 
 
