@@ -8,17 +8,14 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-app.use(cors(
+app.use(cors({
+  origin: 'https://healthnet-3wdjw1465.vercel.app', // Frontend origin
+  methods: 'GET, POST, OPTIONS',
+  allowedHeaders: 'Content-Type, Authorization',
+}));
 
-  {
-    origin: ["https://healthnet-mfvenq3fz-sujans-projects-22ab35c5.vercel.app"],
-    methods: ['GET', 'POST' , 'PUT', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-  }
-));
 app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', "https://healthnet-mfvenq3fz-sujans-projects-22ab35c5.vercel.app");
+  res.header('Access-Control-Allow-Origin', 'https://healthnet-3wdjw1465.vercel.app');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.send();
