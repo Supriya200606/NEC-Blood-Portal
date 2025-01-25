@@ -1,7 +1,7 @@
 const REGISTER_URL = 'http://localhost:5000/api/register';
 const LOGIN_URL = 'http://localhost:5000/api/login';
 const PROFILE_URL = 'http://localhost:5000/api/profile';
-const GET_URL = 'https://localhost:5000/api/getform';
+const GET_URL = 'https://https://healthnet-rose.vercel.app//api/getform';
 const UPLOAD_URL = 'http://localhost:5000/api/uploadform';
 
 export const register = async (fname, lname, contact ,email, password,DOB,district,bloodType,gender) => {
