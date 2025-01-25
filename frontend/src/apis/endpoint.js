@@ -101,6 +101,7 @@ export const showBloodRequestData = async(tag)=>{
   try {
     const res =  await fetch(url ,{
       method: "GET",
+      credentials: "include",
      
       headers: { "Content-Type": "application/json",'Authorization': `Bearer ${token}` },
     });
