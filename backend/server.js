@@ -12,7 +12,7 @@ app.use(cors(
 
   {
     origin: ["http://localhost:3000","https://healthnet-mfvenq3fz-sujans-projects-22ab35c5.vercel.app"],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   }
