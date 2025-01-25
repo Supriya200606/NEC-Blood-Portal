@@ -12,13 +12,13 @@ app.use(cors(
 
   {
     origin: ["http://localhost:3000","https://healthnet-mfvenq3fz-sujans-projects-22ab35c5.vercel.app"],
-    methods: [GET, POST , PUT, OPTIONS],
+    methods: ['GET', 'POST' , 'PUT', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   }
 ));
 app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', 'https://healthnet-3wdjw1465.vercel.app');
+  res.header('Access-Control-Allow-Origin', "https://healthnet-mfvenq3fz-sujans-projects-22ab35c5.vercel.app");
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.send();
