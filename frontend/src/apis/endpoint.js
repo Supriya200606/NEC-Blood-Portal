@@ -1,8 +1,8 @@
-const REGISTER_URL = 'http://localhost:5000/api/register';
-const LOGIN_URL = 'http://localhost:5000/api/login';
-const PROFILE_URL = 'http://localhost:5000/api/profile';
+const REGISTER_URL = 'https://healthnet-crra.onrender.com/api/register';
+const LOGIN_URL = 'https://healthnet-crra.onrender.com/api/login';
+const PROFILE_URL = 'https://healthnet-crra.onrender.com/api/profile';
 const GET_URL = 'https://healthnet-crra.onrender.com/api/getform';
-const UPLOAD_URL = 'http://localhost:5000/api/uploadform';
+const UPLOAD_URL = 'https://healthnet-crra.onrender.com/api/uploadform';
 
 export const register = async (fname, lname, contact ,email, password,DOB,district,bloodType,gender) => {
   try {
