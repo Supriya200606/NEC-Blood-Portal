@@ -1,8 +1,8 @@
-const REGISTER_URL = 'http://healthnet-rose.vercel.app/api/register';
-const LOGIN_URL = 'http://healthnet-rose.vercel.app/api/login';
-const PROFILE_URL = 'http://healthnet-rose.vercel.app/api/profile';
-const GET_URL = 'https://healthnet-rose.vercel.app/api/getform';
-const UPLOAD_URL = 'http://healthnet-rose.vercel.app/api/uploadform';
+const REGISTER_URL = 'http://localhost:5000/api/register';
+const LOGIN_URL = 'http://localhost:5000/api/login';
+const PROFILE_URL = 'http://localhost:5000/api/profile';
+const GET_URL = 'http://localhost:5000/api/getform';
+const UPLOAD_URL = 'http://localhost:5000/api/uploadform';
 
 export const register = async (fname, lname, contact ,email, password,DOB,district,bloodType,gender) => {
   try {
@@ -90,25 +90,28 @@ export const getProfile = async () => {
 }
 
 export const showBloodRequestData = async(tag)=>{
-  try {
-    const res = await fetch(`${GET_URL}?tag=${tag}`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        
-      }
-    });
+  const token = localStorage.getItem('token');
 
+  const url = new URL(GET_URL);  
+  const params = new URLSearchParams({
+    tag: tag,
+  });
+  url.search = params.toString();  
+
+  try {
+    const res =  await fetch(url ,{
+      method: "GET",
+     
+      headers: { "Content-Type": "application/json",'Authorization': `Bearer ${token}` },
+    });
     if (!res.ok) {
       const errorMessage = await res.text();
       throw new Error(`Failed to get profile: ${errorMessage}`);
     }
-
     const data = await res.json();
     return data;
   } catch (error) {
     throw error;
-  }
-}
 
+}
+}

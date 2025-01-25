@@ -11,14 +11,12 @@ app.use(express.json());
 app.use(cors(
 
   {
-    origin: ['https://healthneet.vercel.app/','http://localhost:3000'],
+    origin: "http://localhost:3000",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     
-    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   }
 ));
-app.options('*', cors()); // For global CORS on all routes
 
 
 
@@ -169,7 +167,7 @@ const authenticateToken = (req, res, next) => {
         });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(5000, () => {
     console.log(`Server is running on port ${PORT}`);
   
 });
