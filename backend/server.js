@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors(
 
   {
-    origin: ["http://localhost:3000","https://healthnet-mfvenq3fz-sujans-projects-22ab35c5.vercel.app"],
+    origin: ["https://healthnet-mfvenq3fz-sujans-projects-22ab35c5.vercel.app"],
     methods: ['GET', 'POST' , 'PUT', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -167,6 +167,8 @@ const authenticateToken = (req, res, next) => {
         });
 
         app.get('/api/getform', async (req, res) => {
+          res.header('Access-Control-Allow-Origin', 'https://healthnet-3wdjw1465.vercel.app');
+
           const {tag} = req.query;
           const data = await Form.find({tag:tag});
           res.status(200).json(data)
