@@ -13,8 +13,9 @@ app.use(cors(
   {
     origin: ['https://healthneet.vercel.app/','http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
+    
     allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
   }
 ));
 app.options('*', cors()); // For global CORS on all routes
