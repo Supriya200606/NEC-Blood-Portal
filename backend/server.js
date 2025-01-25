@@ -9,7 +9,9 @@ const app = express();
 
 app.use(express.json());
 const cors = require('cors');
-app.use(cors({ origin: 'https://healthnet-3wdjw1465-sujans-projects-22ab35c5.vercel.app' })); 
+app.use(cors({ origin: 'https://healthnet-3wdjw1465-sujans-projects-22ab35c5.vercel.app',
+  methods: ['GET','POST','OPTIONS']
+ })); 
 
 
 
