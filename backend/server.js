@@ -8,18 +8,10 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-  origin: 'https://healthnet-3wdjw1465.vercel.app', // Frontend origin
-  methods: 'GET, POST, OPTIONS',
-  allowedHeaders: 'Content-Type, Authorization',
-}));
+app.use(cors());
 
-app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', 'https://healthnet-3wdjw1465.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.send();
-});
+
+
 
 
 
@@ -164,12 +156,14 @@ const authenticateToken = (req, res, next) => {
         });
 
         app.get('/api/getform', async (req, res) => {
-          res.header('Access-Control-Allow-Origin', 'https://healthnet-3wdjw1465.vercel.app');
 
           const {tag} = req.query;
           const data = await Form.find({tag:tag});
           res.status(200).json(data)
         });
+
+
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(5000, () => {
