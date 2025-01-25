@@ -5,10 +5,12 @@ const GET_URL = 'https://healthnet-crra.onrender.com/api/getform';
 const UPLOAD_URL = 'https://healthnet-crra.onrender.com/api/uploadform';
 
 export const register = async (fname, lname, contact ,email, password,DOB,district,bloodType,gender) => {
+  const token = localStorage.getItem('token');
+
   try {
     const res = await fetch(REGISTER_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json','Authorization': `Bearer ${token}` },
       body: JSON.stringify({ fname, lname, contact ,email, password,DOB,district,bloodType,gender })
     });
 
@@ -25,11 +27,13 @@ export const register = async (fname, lname, contact ,email, password,DOB,distri
 };
 
 export const login = async (email,password) => {
+  const token = localStorage.getItem('token');
+
 
   try {
     const res = await fetch(LOGIN_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json','Authorization': `Bearer ${token}` },
       body: JSON.stringify({email,password})
     });
 
