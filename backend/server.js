@@ -8,9 +8,7 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-const cors = require('cors');
 app.use(cors({ origin: 'https://healthnet-seven.vercel.app',
-  methods: ['GET','POST','OPTIONS']
  })); 
 
 
