@@ -9,13 +9,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({ origin: 'https://healthnet-seven.vercel.app',
+               credentials: true, 
  })); 
-
-
-
-
-
-
 
 mongoose.connect(process.env.MONGODB_URI,
     {
