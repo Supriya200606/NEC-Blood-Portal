@@ -52,12 +52,20 @@ const RegisterPage = () => {
       setError("Please enter a valid 10-digit contact number.");
       return false;
     }
-    
-    if (isNaN(!DOB) || DOB < 18) {
-      setError("Age must be a number and at least 18.");
-      return false;
-    }
-    
+ 
+  
+const today = new Date();
+const birthDate = new Date(DOB);
+const age = today.getFullYear() - birthDate.getFullYear();
+const monthDifference = today.getMonth() - birthDate.getMonth();
+if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+  age--;
+}
+
+if (age < 18) {
+  setError("You must be at least 18 years old to register.");
+  return;
+}
  
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
