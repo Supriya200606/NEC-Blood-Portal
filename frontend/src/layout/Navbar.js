@@ -1,13 +1,13 @@
 import logo from "../assets/logo.png";
-import React,{useEffect, useState} from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import { Bell } from "lucide-react";
 
 const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
- 
+
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -15,15 +15,11 @@ const Navbar = () => {
   const [isDp1Open, setIsDp1Open] = useState(false);
   const [isDp2Open, setIsDp2Open] = useState(false);
 
-  
-
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate("/");
   };
-  
 
-  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest(".dropdown-portal")) {
@@ -43,7 +39,6 @@ const Navbar = () => {
     };
   }, []);
 
-
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -60,7 +55,6 @@ const Navbar = () => {
   }, [lastScrollY]);
 
   return (
-   
     <>
       <header
         className={`fixed top-0 left-0 w-full z-50 bg-white shadow-lg transition-transform duration-300 ease-in-out ${
@@ -82,47 +76,46 @@ const Navbar = () => {
             </h1>
           </div>
 
-
           <div className="flex gap-3 justify-between items-center py-4 px-6">
-          {isAuthenticated ? (  <><button
-              onClick={() => navigate("/repo")}
-              className="bg-red-600 text-white hover:bg-red-800 border-y-4 border-x-2 rounded-3xl p-2 text-xs"
-            >
-              Blood Recipients
-            </button>
+            {isAuthenticated ? (
+              <>
+                <button
+                  onClick={() => navigate("/repo")}
+                  className="bg-red-600 text-white hover:bg-red-800 border-y-4 border-x-2 rounded-3xl p-2 text-xs"
+                >
+                  Blood Recipients
+                </button>
 
+                <button
+                  onClick={() => navigate("/brepo")}
+                  className="bg-red-600 text-white hover:bg-red-800 border-y-4 border-x-2 rounded-3xl p-2 text-xs"
+                >
+                  Blood Donors
+                </button>
+                <Bell
+                  onClick={() => navigate("/notification")}
+                  className="cursor-pointer"
+                />
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => navigate("/login")}
+                  className="bg-red-600 text-white hover:bg-red-800 border-y-4 border-x-2 rounded-3xl py-2 p-3 text-xs"
+                >
+                  {" "}
+                  Log In
+                </button>
 
-            <button
-              onClick={() => navigate("/brepo")}
-              className="bg-red-600 text-white hover:bg-red-800 border-y-4 border-x-2 rounded-3xl p-2 text-xs"
-            >
-              Blood Donors
-            </button>
-            <Bell
-             onClick={() => navigate("/notification")}
-             className="cursor-pointer"
-           />
-            </> ):(<>
-              <button
-              onClick={() => navigate("/login")}
-              className="bg-red-600 text-white hover:bg-red-800 border-y-4 border-x-2 rounded-3xl py-2 p-3 text-xs"
-            > Log In
-            </button>
-
-
-            <button
-              onClick={() => navigate("/register")}
-              className="bg-red-600 text-white hover:bg-red-800 border-y-4 border-x-2 rounded-3xl p-2 text-xs"
-            >
-              Register
-            </button>
-            </> 
-           
-          
-          )}
-          
+                <button
+                  onClick={() => navigate("/register")}
+                  className="bg-red-600 text-white hover:bg-red-800 border-y-4 border-x-2 rounded-3xl p-2 text-xs"
+                >
+                  Register
+                </button>
+              </>
+            )}
           </div>
-         
         </div>
 
         <nav className="bg-slate-100 font-bold text-black">
@@ -193,17 +186,19 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
-              <li className="hidden md:block">
+
+              
+              <li >
                 <a href="/bank" className="  hover:text-red-500">
                   Blood Banks
                 </a>
               </li>
-              <li className="hidden md:block">
+              <li >
                 <a href="/blog" className="  hover:text-red-500">
                   Blogs
                 </a>
               </li>
-              <li className="hidden md:block">
+              <li>
                 <a href="/about" className="  hover:text-red-500">
                   AboutUs
                 </a>
@@ -247,25 +242,24 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
-            
 
-<div className="flex space-x-4">
-{isAuthenticated ? (
-  <>
-    <Link to="/profile" className=" hover:text-red-500">Profile</Link>
-    <button
-      onClick={handleLogout}
-      className=" hover:text-red-500"
-    >
-      Logout
-    </button>
-  </>
-) : (
-  <>
-  </>
-)}
-</div>
-            
+              <div className="flex space-x-4">
+                {isAuthenticated ? (
+                  <>
+                    <Link to="/profile" className=" hover:text-red-500">
+                      Profile
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className=" hover:text-red-500"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
             </ul>
           </div>
         </nav>
@@ -274,4 +268,3 @@ const Navbar = () => {
   );
 };
 export default Navbar;
-
