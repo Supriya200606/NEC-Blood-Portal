@@ -3,11 +3,11 @@ import React from "react";
 const HelpLine = () => {
   
   const contacts = [
-{ name: "General Helpline", number: "9800000000" },
 { name: "Emergency Services", number: "100" },
 {name: "Ambulance services", number:"101"},
-{ name: "Nearest Blood Bank", number: "9800000001" },
-{ name: "Health Queries", number: "9800000002" },
+{ name: "Nearest Blood Bank", number: "023-541833" },
+{ name: "NPH:General Helpline", number: "01-4412430" },
+
 ];
 
 

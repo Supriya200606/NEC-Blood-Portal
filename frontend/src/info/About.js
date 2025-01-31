@@ -10,10 +10,10 @@ const About = () => {
     <div className="bg-slate-200">
       <div className="text-black p-4">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-6"></div>
-        <div  >
+        <div>
           <section className="relative h-[600px] bg-gray flex items-center">
             <div className="container mx-auto relative z-10 px-6">
-              <div className="max-w-2xl  ">
+              <div className="max-w-2xl">
                 <h1 className="lg:text-6xl text-4xl px-2 text-slate-700 font-bold">
                   Every Drop Counts
                 </h1>
@@ -24,7 +24,7 @@ const About = () => {
                 <div className="space-x-4">
                   <button
                     onClick={() => navigate("/guide")}
-                    className="bg-red-700 p-2 m-2 text-white shadow-black  hover:bg-white hover:text-red-600 font-bold py-3 px-6 rounded-lg shadow-lg"
+                    className="bg-red-700 p-2 m-2 text-white shadow-black hover:bg-white hover:text-red-600 font-bold py-3 px-6 rounded-lg shadow-lg"
                   >
                     Guide for Donation
                   </button>
@@ -72,7 +72,7 @@ const About = () => {
         <div className="flex flex-col lg:flex-row items-center">
           <div className="m-10 flex-1 items-center mb-10 lg:text-6xl text-4xl px-2 text-[#fc2323] mt-16 font-extrabold text-center">
             What is HealthNet?
-            <p className="lg:text-2xl text-xl text-black font-bold m-10 text-center ">
+            <p className="lg:text-2xl text-xl text-black font-bold m-10 text-center">
               HealthNet is an innovative platform devoted to combating blood
               deficiency and thereby enhancing healthcare access within Nepal.
               Our mission is simple yet deep: to create a connected community
@@ -102,11 +102,9 @@ const About = () => {
           </div>
         </div>
         <div className="flex flex-wrap justify-around items-center h-auto">
-        
           <div className="flex flex-col items-center p-6 w-1/2 lg:w-1/4">
-            <div className="border-4  w-1/2  rounded-full mb-4">
-            <img src={sujan} alt="logo" className="rounded-full" />
-
+            <div className="border-4 w-1/2 rounded-full mb-4">
+              <img src={sujan} alt="logo" className="rounded-full" />
             </div>
             <p className="text-3xl font-bold mb-2">Sujan Mishra</p>
             <div className="rounded-3xl font-bold text-lg px-4 py-2 bg-zinc-400">
@@ -121,19 +119,16 @@ const About = () => {
           </div>
 
           <div className="flex flex-col items-center p-6 w-1/2 lg:w-1/4">
-            <div className="border-4  w-1/2 rounded-full mb-4">
-            <img src={ankit} alt="logo" className=" rounded-full" />
-
+            <div className="border-4 w-1/2 rounded-full mb-4">
+              <img src={ankit} alt="logo" className="rounded-full" />
             </div>
             <p className="text-3xl font-bold mb-2">Ankit Dhakal</p>
             <div className="rounded-3xl font-bold text-lg px-4 py-2 bg-zinc-400">
               Backend
             </div>
             <p className="font-serif m-6 text-md">
-              A very honorable student of Shreeyantra College, always moving
-              forward in every endeavor. The work done by him can be considered
-              as the world's finest crafts, and he is a very good friend of
-              mine.
+             A proud of Shreeyantra College who has successfully proven his work and intelligence in jjis 4 year career.
+             He is very friendly toward his every friends and veryresponsible toward his duty.
             </p>
           </div>
         </div>

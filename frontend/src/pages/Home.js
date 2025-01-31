@@ -78,7 +78,7 @@ const Home = () => {
         <img
           src="https://imgs.search.brave.com/dAQNwl0N7deGF_jcWEBZoSVCiBaK0MtMEAKwPtfKO8Y/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAyLzIxLzQ3Lzk5/LzM2MF9GXzIyMTQ3/OTk0Nl8yeVVtV1Jt/VlBCa2E2ZDR6Y1hi/QmhKYlJyYThXY3BR/Vi5qcGc"
           alt="blooddonation"
-          className="rounded-full w-full md:w-1/2 lg:w-1/3"
+          className="rounded-full m-4 w-full md:w-1/2 lg:w-1/3"
         />
       </div>
 
@@ -88,7 +88,7 @@ const Home = () => {
           <div>
             <h2 className="text-4xl font-bold text-center text-red-600 mb-8">Available Donors</h2>
             <div className="grid grid-cols-1 gap-8">
-              {donorsData.slice(0, 4).map((donor, index) => (
+              {donorsData.slice(0, 3).map((donor, index) => (
                 <div
                   key={index}
                   className="bg-gray-100 shadow-lg rounded-lg p-6 flex flex-col items-center"
@@ -120,7 +120,7 @@ const Home = () => {
       </div>
 
   
-      <div onClick={() => navigate("/campaigns")} className="bg-gray-100 py-12 px-4 md:px-8">
+      <div onClick={() => navigate("/campaigns")} className="bg-gray-100 py-12 px-4 md:px-8 cursor-pointer">
         <h2 className="text-4xl font-bold text-center text-red-600 mb-8">Campaigns</h2>
         <div className="flex justify-evenly overflow-x-scroll space-x-8">
           <div className="min-w-[300px] bg-white shadow-lg rounded-lg p-6">
@@ -138,7 +138,7 @@ const Home = () => {
                   
                 </div>
               </div>
-             
+          </div>   
       <div className="bg-gradient-to-r from-red-700 to-red-900 py-12 px-4 mt-10 md:px-8">
         <h2 className="text-4xl font-extrabold text-center text-slate-300 mb-8">
           Why Was HealthNet Developed?
@@ -237,14 +237,14 @@ const Home = () => {
       <div className="bg-red-600 py-12 text-center text-white">
         <h2 className="text-4xl font-bold mb-6">Join Us in Making a Difference</h2>
         <button
-          onClick={() => navigate("/bank")}
+          onClick={() => navigate('/bank')}
           className="bg-white text-red-600 font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-red-100"
         >
           Find the Nearest Blood Branch
         </button>
       </div>
     </div>
-    </div>
+    
   );
 };
 

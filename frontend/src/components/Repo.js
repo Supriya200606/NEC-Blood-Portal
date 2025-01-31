@@ -36,9 +36,9 @@ const navigate= useNavigate();
   
     <div className="min-h-screen bg-gray-100  p-6">
     
-          <pre className="text-2xl font-bold text-gray-900 text-center  p-4 rounded-lg shadow-md">
+          <p className="text-2xl font-bold text-gray-900 text-center  p-4 rounded-lg shadow-md">
              Here you can find people in need of blood donations.
-        </pre>
+        </p>
         <p className='text-center font-semibold mb-8'>                     Your contribution can save lives.
         </p>
       <div className="max-w-4xl items-center mx-auto bg-white rounded-lg shadow-lg p-8">

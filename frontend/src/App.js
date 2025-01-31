@@ -19,7 +19,8 @@ import BloodFind from "./components/BloodFind.js";
 import ContactUser from "./components/contactuser.js";
 import Repo from "./components/Repo.js";
 import BRepo from "./components/Brepo.js";
-import Form from "./components/form.js";
+import Form from "./components/form.js"; 
+import Showform from './pages/Showform.js';
 
 
 // Protected Route Component
@@ -91,6 +92,15 @@ const App = () => {
                   </ProtectedRoute>
                 } 
               />
+                <Route 
+                path="/showform" 
+                element={
+                  <ProtectedRoute>
+                    <Showform/>
+                  </ProtectedRoute>
+                } 
+              />
+
               
               </Route>
              

@@ -32,10 +32,10 @@ const BRepo = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <pre className="text-2xl font-bold text-gray-900 text-center  p-4 rounded-lg shadow-md">
+      <p className="text-2xl font-bold text-gray-900 text-center  p-4 rounded-lg shadow-md">
       Here you can find people who are willing to donate blood.
       
-      </pre>
+      </p>
       <p className='text-center font-semibold mb-8 '>Save people valuable lives.</p>
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
       <div className='justify-items-center'>

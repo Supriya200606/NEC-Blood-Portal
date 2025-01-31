@@ -148,7 +148,7 @@ const navigate=useNavigate();
           <p className="text-gray-600 mb-8">
             Your blood donation can make a significant difference in someone's life.
           </p>
-          <button onClick={()=>navigate("/rform")} className="bg-red-600 text-white px-8 py-3 rounded-lg hover:bg-red-800 transition-colors">
+          <button onClick={()=>navigate("/form")} className="bg-red-600 text-white px-8 py-3 rounded-lg hover:bg-red-800 transition-colors">
             Schedule a Donation
           </button>
         </div>

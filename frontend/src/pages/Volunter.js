@@ -40,11 +40,11 @@ const Volunteer= () => {
 
   return (
 
-    <div className='bg-slate-200'>
+   
     <div className="max-w-3xl text-black mx-auto mt-10 p-5 border rounded shadow-lg bg-white">
       <h2 className="text-2xl font-bold mb-5 text-center">Volunteer Registration Form</h2>
       <form onSubmit={handleSubmit} className="space-y-5">
-\        <div>
+      <div>
           <label className="block mb-1">Full Name:</label>
           <input
             type="text"
@@ -128,7 +128,7 @@ const Volunteer= () => {
         </button>
       </form>
     </div>
-    </div>
+ 
   );
 };
 

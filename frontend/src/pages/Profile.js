@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getProfile } from "../apis/endpoint";
+import { Link} from "react-router-dom";
+import { getProfile, deleteProfile  } from "../apis/endpoint";
 
 
 
@@ -37,14 +37,37 @@ const Profile = () => {
     };
     fetchData();
   }, []);
+  
+  const  deleteUser = async () => {
+    try {
+      const res = await deleteProfile();
+      if (res.success) {
+        console.log('Profile deleted successfully');
+     
+    
+     
+      } else {
+        console.log('Failed to delete profile');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  
   return (
     <div>
       <div className="min-h-screen flex justify-center items-center bg-slate-200">
         <div className="bg-gradient-to-tr from-slate-50 via-grey-200 to-slate-200 w-4/5 rounded-3xl shadow-lg p-4 flex">
           <div className="w-1/4 flex flex-col items-center border-r border-gray-300 pr-4">
             <div className="text-center">
-              <h1 className="mt-4 text-3xl font-bold">Donation Detail</h1>
+              
+            <Link to="/showform">
+              <span className="text-3xl mb-6 text-red-600 font-bold p-2 border-red-400 rounded-full border-4 cursor-pointer">
+                Show my Forms
+              </span>
+            </Link>
+              <h1 className="mt-10 text-3xl   font-bold">Donation Detail</h1>
               <h2 className="mt-4 text-xl font-bold text-red-700">{fname} {lname}</h2>
               <table className="mt-4 w-full text-left">
                 <thead>
@@ -180,10 +203,10 @@ const Profile = () => {
               </div>
             </form>
             <button
-              type="submit"
+              onClick={deleteUser}
               className="mt-6 px-6 py-2 rounded-md bg-red-600 text-white hover:bg-red-800 hover:text-white focus:outline-none"
             >
-              Edit Profile
+              delete Profile
             </button>
           </div>
         </div>

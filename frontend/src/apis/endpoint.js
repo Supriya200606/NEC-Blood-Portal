@@ -3,6 +3,9 @@ const LOGIN_URL = 'https://healthnet-v3g1.onrender.com/api/login';
 const PROFILE_URL = 'https://healthnet-v3g1.onrender.com/api/profile';
 const GET_URL = 'https://healthnet-v3g1.onrender.com/api/getform';
 const UPLOAD_URL = 'https://healthnet-v3g1.onrender.com/api/uploadform';
+const DELETE_URL = 'https://healthnet-v3g1.onrender.com/api/delete/:id';
+const DELETEFORM_URL = 'https://healthnet-v3g1.onrender.com/api/deleteform/:id';
+const SHOWFORM_URL ='https://healthnet-v3g1.onrender.com/api/myforms/:id';
 
 export const register = async (fname, lname, contact ,email, password,DOB,district,bloodType,gender) => {
   const token = localStorage.getItem('token');
@@ -120,3 +123,81 @@ export const showBloodRequestData = async(tag)=>{
 
 }
 }
+
+
+export const deleteProfile = async (id) => {
+  const token = localStorage.getItem('token');
+  const url = DELETE_URL.replace(':id', id);
+
+  try {
+    const res = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+   
+
+    if (!res.ok) {
+      const errorMessage = await res.text();
+      throw new Error(`Failed to delete profile: ${errorMessage}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getFormById = async (id) => {
+  const token = localStorage.getItem('token');
+  const url =SHOWFORM_URL.replace(':id', id);
+
+
+  try {
+    const res = await fetch(url,{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`
+
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    return await res.json(); // Ensure JSON is returned here
+  } catch (error) {
+    console.error("API Error:", error);
+    return null;
+  }
+};
+
+
+export const deleteForm = async (id) => {
+  const token = localStorage.getItem('token');
+  const url = DELETEFORM_URL.replace(':id', id);
+
+  try {
+    const res = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!res.ok) {
+      const errorMessage = await res.text();
+      throw new Error(`Failed to delete form: ${errorMessage}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    throw error;
+  }
+};

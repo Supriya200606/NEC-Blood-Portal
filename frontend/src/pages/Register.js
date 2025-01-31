@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { register } from "../apis/endpoint";
+import { register} from "../apis/endpoint";
 
 
 const RegisterPage = () => {
@@ -54,18 +54,9 @@ const RegisterPage = () => {
     }
  
   
-const today = new Date();
-const birthDate = new Date(DOB);
-const age = today.getFullYear() - birthDate.getFullYear();
-const monthDifference = today.getMonth() - birthDate.getMonth();
-if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-  age--;
-}
 
-if (age < 18) {
-  setError("You must be at least 18 years old to register.");
-  return;
-}
+
+
  
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -97,9 +88,8 @@ if (age < 18) {
 
       if (data) {
         setUserData(data);
-        setResponse("Registration successful! Redirecting...");
         navigate("/login");
-        alert("")
+  
       } else {
         setResponse("Registration failed.");
       }

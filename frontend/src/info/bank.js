@@ -69,23 +69,22 @@ const Bank = () => {
 
   return (
     <>
-  
-      <div className="overflow-x-auto p-10 rounded-lg ">
-        <table className="min-w-full bg-white border border-gray-300  shadow-md">
+      <div className="overflow-x-auto p-4 sm:p-10 rounded-lg">
+        <table className="min-w-full bg-white border border-gray-300 shadow-md">
           <thead>
-            <tr className="bg-red-50 text-2xl  font-bold">
-              <th className="py-2 px-4  border-b text-left text-red-600 ">Blood Bank</th>
-              <th className="py-2 px-4 border-b  text-left text-red-600 ">Location</th>
-              <th className="py-2 px-4 border-b  text-left text-red-600 ">Phone</th>
+            <tr className="bg-red-50 text-lg sm:text-2xl font-bold">
+              <th className="py-2 px-2 sm:px-4 border-b text-left text-red-600">Blood Bank</th>
+              <th className="py-2 px-2 sm:px-4 border-b text-left text-red-600">Location</th>
+              <th className="py-2 px-2 sm:px-4 border-b text-left text-red-600">Phone</th>
               {bloodGroups.map((group, index) => (
-                <th key={index} className="py-2 px-4 border-b text-left text-red-600 ">{group}</th>
+                <th key={index} className="py-2 px-2 sm:px-4 border-b text-left text-red-600">{group}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {bloodBankData.map((bank, index) => (
               <tr key={index} className="hover:bg-gray-100 font-bold">
-                <td className="py-2 px-4 border-b text-gray-800">{bank.name}</td>
+                <td className="py-2 px-2 sm:px-4 border-b text-gray-800">{bank.name}</td>
                 <td className="py-2 px-4 border-b text-gray-800">{bank.location}</td>
                 <td className="py-2 px-4 border-b text-gray-800">{bank.phone}</td>
                 {bloodGroups.map((group, idx) => (

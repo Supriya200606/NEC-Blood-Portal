@@ -42,8 +42,8 @@ const LoginPage = () => {
       const response = await apiLogin(formData.email, formData.password);
       if (response.token) {
         login(response.user, response.token);
-        setResponse("Login successful! Redirecting...");
-        navigate('/profile');
+       
+        navigate('/home');
       }
     } catch (error) {
       setError(error.message);
@@ -84,7 +84,7 @@ const LoginPage = () => {
               Login
             </h1>
             <div className="mb-4">
-              <label htmlFor="email" className="block mb-2">
+              <label  className="block mb-2">
                 Email address
               </label>
               <input
@@ -98,7 +98,7 @@ const LoginPage = () => {
             </div>
 
             <div className="mb-4">
-              <label htmlFor="password" className="block mb-2">
+              <label className="block mb-2">
                 Password
               </label>
               <input
