@@ -6,7 +6,7 @@ const Form = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate('');
   const user = JSON.parse(localStorage.getItem("user"));
-  const userId = user.id;
+  const userId = user._id;
 
   const [requesterData, setRequesterData] = useState({
     fullname: "", contactnumber: "", email: "", tag: "", bloodType: "", age: "", weight: "", gender: "", address: "", agreeTerms: false,
