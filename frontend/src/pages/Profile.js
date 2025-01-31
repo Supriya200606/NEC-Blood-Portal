@@ -60,7 +60,15 @@ const Profile = () => {
       <div className="min-h-screen flex justify-center items-center bg-slate-200">
         <div className="bg-gradient-to-tr from-slate-50 via-grey-200 to-slate-200 w-full md:w-4/5 rounded-3xl shadow-lg p-4 flex flex-col md:flex-row">
           <div className="w-full md:w-1/4 flex flex-col items-center border-b md:border-b-0 md:border-r border-gray-300 pb-4 md:pb-0 md:pr-4">
+          <Link to="/showform">
+           <button className="text-xl md:text-3xl mb-6 text-red-600 font-bold p-2 border-red-400 rounded-full border-4 cursor-pointer">
+
+                  Show my Forms
+                  </button>
+              </Link>
+           
             <div className="text-center">
+           
               
               <h1 className="mt-10 text-2xl md:text-3xl font-bold">Donation Detail</h1>
               <h2 className="mt-4 text-lg md:text-xl font-bold text-red-700">{fname} {lname}</h2>
@@ -198,12 +206,7 @@ const Profile = () => {
             >
               Edit Profile
             </button>
-           <Link to="/showform">
-           <button className="text-xl md:text-3xl mb-6 text-red-600 font-bold p-2 border-red-400 rounded-full border-4 cursor-pointer">
-
-                  Show my Forms
-                  </button>
-              </Link>
+         
 
               <div className="flex mt-auto p-4 text text-center justify-end">
               <p>
