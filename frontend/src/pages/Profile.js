@@ -51,12 +51,12 @@ const Profile = () => {
     <div className="min-h-screen flex justify-center items-center bg-slate-200">
       <div className="bg-gradient-to-tr mt-10 from-slate-50 via-grey-200 to-slate-200 w-full md:w-4/5 rounded-3xl shadow-lg p-4 flex flex-col md:flex-row">
         <div className="w-full md:w-3/4 pl-0 md:pl-6">
-          <h3 className="text-3xl md:text-4xl font-bold mb-6 text-red-600 font-serif">
+          <h3 className="text-2xl md:text-4xl font-bold mb-6 text-red-600 font-serif">
             Profile
           </h3>
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <label className="block text-lg font-bold text-gray-700">
+              <label className="block text-base md:text-lg font-bold text-gray-700">
                 First Name
               </label>
               <input
@@ -68,7 +68,7 @@ const Profile = () => {
               />
             </div>
             <div>
-              <label className="block text-lg font-bold text-gray-700">
+              <label className="block text-base md:text-lg font-bold text-gray-700">
                 Last Name
               </label>
               <input
@@ -81,7 +81,7 @@ const Profile = () => {
             </div>
 
             <div>
-              <label className="block text-lg font-bold text-gray-700">
+              <label className="block text-base md:text-lg font-bold text-gray-700">
                 Blood Group
               </label>
               <input
@@ -93,7 +93,7 @@ const Profile = () => {
               />
             </div>
             <div>
-              <label className="block text-lg font-bold text-gray-700">
+              <label className="block text-base md:text-lg font-bold text-gray-700">
                 Gender
               </label>
               <input
@@ -105,7 +105,7 @@ const Profile = () => {
               />
             </div>
             <div className="col-span-2">
-              <label className="block text-lg font-bold text-gray-700">
+              <label className="block text-base md:text-lg font-bold text-gray-700">
                 Date Of Birth (DOB)
               </label>
               <input
@@ -118,7 +118,7 @@ const Profile = () => {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-lg font-bold text-gray-700">
+              <label className="block text-base md:text-lg font-bold text-gray-700">
                 Mobile Number
               </label>
               <input
@@ -131,7 +131,7 @@ const Profile = () => {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-lg font-bold text-gray-700">
+              <label className="block text-base md:text-lg font-bold text-gray-700">
                 Address
               </label>
               <input
@@ -144,7 +144,7 @@ const Profile = () => {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-lg font-bold text-gray-700">
+              <label className="block text-base md:text-lg font-bold text-gray-700">
                 Email ID
               </label>
               <input
@@ -161,14 +161,14 @@ const Profile = () => {
             <div className="flex mt-auto p-4 text text-center justify-between ">
               <button
                 onClick={deleteUser}
-                className="m-2  p-2  rounded-md bg-red-600 text-white hover:bg-red-800 hover:text-white focus:outline-none"
+                className="m-2 p-2 rounded-md bg-red-600 text-white hover:bg-red-800 hover:text-white focus:outline-none text-sm md:text-base"
               >
                 Delete Profile
               </button>
 
               <button
                 onClick={deleteUser}
-                className="m-2 p-2 rounded-md bg-red-600 text-white hover:bg-red-800 hover:text-white focus:outline-none"
+                className="m-2 p-2 rounded-md bg-red-600 text-white hover:bg-red-800 hover:text-white focus:outline-none text-sm md:text-base"
               >
                 Edit Profile
               </button>
@@ -178,7 +178,7 @@ const Profile = () => {
                 <Link to="/login">
                   <button
                     type="submit"
-                    className="bg-red-600 text-white hover:bg-red-800 hover:text-white text-lg font-bold p-2 rounded-lg shadow-lg"
+                    className="bg-red-600 text-white hover:bg-red-800 hover:text-white text-sm md:text-lg font-bold p-2 rounded-lg shadow-lg"
                   >
                     Logout
                   </button>
@@ -186,63 +186,62 @@ const Profile = () => {
               </p>
             </div>
           </div>
-          </div>
+        </div>
 
-          <div className="w-full md:w-1/4 flex flex-col items-center border-b md:border-b-0 md:border-r border-gray-300 pb-4 md:pb-0 md:pr-4">
-            <Link to="/showform">
-              <button className="text-xl md:text-3xl mb-6 text-red-600 font-bold p-2 border-red-400 rounded-full border-4 cursor-pointer">
-                Show my Forms
-              </button>
-            </Link>
+        <div className="w-full md:w-1/4 flex flex-col items-center border-b md:border-b-0 md:border-r border-gray-300 pb-4 md:pb-0 md:pr-4">
+          <Link to="/showform">
+            <button className="text-lg md:text-3xl mb-6 text-red-600 font-bold p-2 border-red-400 rounded-full border-4 cursor-pointer">
+              Show my Forms
+            </button>
+          </Link>
 
-            <div className="text-center">
-              <h1 className="mt-10 text-2xl md:text-3xl font-bold">
-                Donation Detail
-              </h1>
-              <h2 className="mt-4 text-lg md:text-xl font-bold text-red-700">
-                {fname} {lname}
-              </h2>
-              <table className="mt-4 w-full text-left">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-2 font-bold">Topic</th>
-                    <th className="px-4 py-2 font-bold">No.</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="border px-4 py-2 font-bold">
-                      No. of Donations
-                    </td>
-                    <td className="border px-4 py-2 font-bold">5</td>
-                  </tr>
-                  <tr>
-                    <td className="border px-4 py-2 font-bold">
-                      No. of Received Blood
-                    </td>
-                    <td className="border px-4 py-2 font-bold">2</td>
-                  </tr>
-                  <tr>
-                    <td className="border px-4 py-2 font-bold">
-                      No. of Attended Campaign
-                    </td>
-                    <td className="border px-4 py-2 font-bold">5</td>
-                  </tr>
-                  <tr>
-                    <td className="border px-4 py-2 font-bold">
-                      No. of volunterring
-                    </td>
-                    <td className="border px-4 py-2 font-bold">0</td>
-                  </tr>
-                  <tr>
-                    <td className="border px-4 py-2 font-bold">Other</td>
-                    <td className="border px-4 py-2 font-bold">N/A</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div className="text-center">
+            <h1 className="mt-10 text-xl md:text-3xl font-bold">
+              Donation Detail
+            </h1>
+            <h2 className="mt-4 text-base md:text-xl font-bold text-red-700">
+              {fname} {lname}
+            </h2>
+            <table className="mt-4 w-full text-left">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2 font-bold">Topic</th>
+                  <th className="px-4 py-2 font-bold">No.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border px-4 py-2 font-bold">
+                    No. of Donations
+                  </td>
+                  <td className="border px-4 py-2 font-bold">5</td>
+                </tr>
+                <tr>
+                  <td className="border px-4 py-2 font-bold">
+                    No. of Received Blood
+                  </td>
+                  <td className="border px-4 py-2 font-bold">2</td>
+                </tr>
+                <tr>
+                  <td className="border px-4 py-2 font-bold">
+                    No. of Attended Campaign
+                  </td>
+                  <td className="border px-4 py-2 font-bold">5</td>
+                </tr>
+                <tr>
+                  <td className="border px-4 py-2 font-bold">
+                    No. of volunterring
+                  </td>
+                  <td className="border px-4 py-2 font-bold">0</td>
+                </tr>
+                <tr>
+                  <td className="border px-4 py-2 font-bold">Other</td>
+                  <td className="border px-4 py-2 font-bold">N/A</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-       
+        </div>
       </div>
     </div>
   );
