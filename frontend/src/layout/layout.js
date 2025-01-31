@@ -12,7 +12,7 @@ import Footer from "./footer";
         <div className="flex flex-col min-h-screen ">
         <Navbar />
         
-        <main className="flex-grow mt-40">
+        <main className="flex-grow mt-48">
           <Outlet />
         </main>
   

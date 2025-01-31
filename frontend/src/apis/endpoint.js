@@ -75,7 +75,7 @@ export const getProfile = async () => {
 };
 
 
- export const setFormData = async(fullname,contactnumber,email,tag,bloodType,age,weight,gender,address)=>{
+ export const setFormData = async(fullname,contactnumber,email,tag,bloodType,age,weight,gender,address,userId)=>{
   const token = localStorage.getItem('token');
   try {
 
@@ -83,7 +83,7 @@ export const getProfile = async () => {
       method: "POST",
       credentials: 'include',
       headers: { "Content-Type": "application/json",'Authorization': `Bearer ${token}` },
-      body: JSON.stringify({ fullname,contactnumber,email,tag, bloodType,age,weight,gender,address}),
+      body: JSON.stringify({ fullname,contactnumber,email,tag, bloodType,age,weight,gender,address,userId}),
     });
     if (!res.ok) {
       const errorMessage = await res.text();
