@@ -125,6 +125,52 @@ const Navbar = () => {
                   Home
                 </a>
               </li>
+              
+              
+              <li >
+                <a href="/bank" className="  hover:text-red-500">
+                  Blood Banks
+                </a>
+              </li>
+              <li >
+                <a href="/blog" className="  hover:text-red-500">
+                  Blogs
+                </a>
+              </li>
+              <li>
+                <a href="/about" className="  hover:text-red-500">
+                  AboutUs
+                </a>
+              </li>
+
+             
+              <div className="relative dropdown-donors">
+                <button
+                  className="hover:text-red-500 "
+                  onClick={() => setIsDp1Open((prev) => !prev)}
+                >
+                  Blood Donors/Requests
+                </button>
+                {isDp1Open && (
+                  <div className="absolute right-0 mt-2 w-40 bg-white text-gray-800 rounded shadow-lg">
+                    <ul>
+                      <li
+                        onClick={() => navigate("/brepo")}
+                        className="px-4 py-2 hover:bg-red-500 hover:text-white cursor-pointer"
+                      >
+                        Blood Donors Lists
+                      </li>
+                      <li
+                        onClick={() => navigate("/repo")}
+                        className="px-4 py-2 hover:bg-red-500  hover:text-white cursor-pointer"
+                      >
+                        Blood Request Lists
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+
 
               <div className="relative dropdown-portal">
                 <button
@@ -159,49 +205,7 @@ const Navbar = () => {
                 )}
               </div>
 
-              <div className="relative dropdown-donors">
-                <button
-                  className="hover:text-red-500 "
-                  onClick={() => setIsDp1Open((prev) => !prev)}
-                >
-                  Blood Donors/Requests
-                </button>
-                {isDp1Open && (
-                  <div className="absolute right-0 mt-2 w-40 bg-white text-gray-800 rounded shadow-lg">
-                    <ul>
-                      <li
-                        onClick={() => navigate("/brepo")}
-                        className="px-4 py-2 hover:bg-red-500 hover:text-white cursor-pointer"
-                      >
-                        Blood Donors Lists
-                      </li>
-                      <li
-                        onClick={() => navigate("/repo")}
-                        className="px-4 py-2 hover:bg-red-500  hover:text-white cursor-pointer"
-                      >
-                        Blood Request Lists
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
 
-              
-              <li >
-                <a href="/bank" className="  hover:text-red-500">
-                  Blood Banks
-                </a>
-              </li>
-              <li >
-                <a href="/blog" className="  hover:text-red-500">
-                  Blogs
-                </a>
-              </li>
-              <li>
-                <a href="/about" className="  hover:text-red-500">
-                  AboutUs
-                </a>
-              </li>
 
               <div className="relative dropdown-resources">
                 <button

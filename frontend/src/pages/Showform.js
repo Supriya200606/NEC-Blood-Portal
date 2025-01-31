@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getFormById,deleteForm } from "../apis/endpoint";   
+import { getFormById,deleteForm } from "../apis/endpoint";  
+import { useNavigate } from "react-router-dom"; 
 
 const Showform = () => {
   const [forms, setForms] = useState([]);
+  const navigate = useNavigate('');
 
   useEffect(() => {
     const fetchForms = async () => {
@@ -30,6 +32,7 @@ const handledelete = async () => {
         // Assuming you have an API endpoint to delete all forms
         await deleteForm();
         setForms([]);
+        navigate('/login');
         console.log("All forms deleted successfully");
         
     } catch (error) {

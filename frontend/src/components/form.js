@@ -5,7 +5,7 @@ import { setFormData } from "../apis/endpoint";
 const Form = () => {
   const [error, setError] = useState("");
   const navigate =useNavigate('');
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = localStorage.getItem("user");
   const userId = user.id;
 
   const [requesterData, setRequesterData] = useState({

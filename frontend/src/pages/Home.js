@@ -104,7 +104,7 @@ const Home = () => {
           <div>
             <h2 className="text-4xl font-bold text-center text-gray-600 mb-8">Blood Needers</h2>
             <div className="grid grid-cols-1 gap-8">
-              {recepientData.slice(0, 4).map((recipient, index) => (
+              {recepientData.slice(0, 3).map((recipient, index) => (
                 <div
                   key={index}
                   className="bg-[#f33535] shadow-lg rounded-lg p-6 flex flex-col items-center"
@@ -198,10 +198,21 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Testimonials Section */}
-      <div className="bg-white py-12 px-4 md:px-8">
-        <h2 className="text-3xl font-bold text-center text-red-600 mb-8">What People Say About Us?</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+     
+
+
+
+
+      <div  className="bg-gray-100 py-12 px-4 md:px-8 cursor-pointer">
+        <h2 className="text-4xl font-bold text-center text-red-600 mb-8">What People Say About Us?</h2>
+        <div className="flex justify-evenly overflow-x-scroll space-x-8">
+        <div className="bg-gray-50 shadow-lg rounded-lg p-6 flex flex-col items-center">
+            <p className="text-gray-600 italic mb-4">
+              "Good initiative. Hope to work with you guys."
+            </p>
+            <h3 className="font-semibold text-gray-800">Sushil</h3>
+            <p className="text-gray-500">Red Cross MD</p>
+          </div>
           <div className="bg-gray-50 shadow-lg rounded-lg p-6 flex flex-col items-center">
             <p className="text-gray-600 italic mb-4">
               "Donating blood was the most rewarding experience of my life. I feel proud to have made a difference."
@@ -223,15 +234,9 @@ const Home = () => {
             <h3 className="font-semibold text-gray-800">Somnath</h3>
             <p className="text-gray-500">Blood Recipient</p>
           </div>
-          <div className="bg-gray-50 shadow-lg rounded-lg p-6 flex flex-col items-center">
-            <p className="text-gray-600 italic mb-4">
-              "Good initiative. Hope to work with you guys."
-            </p>
-            <h3 className="font-semibold text-gray-800">Sushil</h3>
-            <p className="text-gray-500">Red Cross MD</p>
-          </div>
-        </div>
-      </div>
+       
+              </div>
+          </div>   
 
 
       <div className="bg-red-600 py-12 text-center text-white">
