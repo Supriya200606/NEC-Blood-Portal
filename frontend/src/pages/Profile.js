@@ -56,16 +56,12 @@ const Profile = () => {
 
   
   return (
-    <div>
+    <div className="mt-10">
       <div className="min-h-screen flex justify-center items-center bg-slate-200">
         <div className="bg-gradient-to-tr from-slate-50 via-grey-200 to-slate-200 w-full md:w-4/5 rounded-3xl shadow-lg p-4 flex flex-col md:flex-row">
           <div className="w-full md:w-1/4 flex flex-col items-center border-b md:border-b-0 md:border-r border-gray-300 pb-4 md:pb-0 md:pr-4">
             <div className="text-center">
-              <Link to="/showform">
-                <span className="text-xl md:text-3xl mb-6 text-red-600 font-bold p-2 border-red-400 rounded-full border-4 cursor-pointer">
-                  Show my Forms
-                </span>
-              </Link>
+              
               <h1 className="mt-10 text-2xl md:text-3xl font-bold">Donation Detail</h1>
               <h2 className="mt-4 text-lg md:text-xl font-bold text-red-700">{fname} {lname}</h2>
               <table className="mt-4 w-full text-left">
@@ -99,18 +95,7 @@ const Profile = () => {
                 </tbody>
               </table>
             </div>
-            <div className="flex-col mt-auto p-4 text text-center">
-              <p>
-                <Link to="/login">
-                  <button
-                    type="submit"
-                    className="bg-red-600 text-white hover:bg-red-800 hover:text-white text-lg font-bold p-2 rounded-lg shadow-lg"
-                  >
-                    Logout
-                  </button>
-                </Link>
-              </p>
-            </div>
+            
           </div>
 
           <div className="w-full md:w-3/4 pl-0 md:pl-6">
@@ -205,8 +190,33 @@ const Profile = () => {
               onClick={deleteUser}
               className="mt-6 px-6 py-2 rounded-md bg-red-600 text-white hover:bg-red-800 hover:text-white focus:outline-none"
             >
-              delete Profile
+              Delete Profile
             </button>
+            <button
+              onClick={deleteUser}
+              className="mt-6 px-6 py-2 rounded-md bg-red-600 text-white hover:bg-red-800 hover:text-white focus:outline-none"
+            >
+              Edit Profile
+            </button>
+           <Link to="/showform">
+           <button className="text-xl md:text-3xl mb-6 text-red-600 font-bold p-2 border-red-400 rounded-full border-4 cursor-pointer">
+
+                  Show my Forms
+                  </button>
+              </Link>
+
+              <div className="flex mt-auto p-4 text text-center justify-end">
+              <p>
+                <Link to="/login">
+                  <button
+                    type="submit"
+                    className="bg-red-600 text-white hover:bg-red-800 hover:text-white text-lg font-bold p-2 rounded-lg shadow-lg"
+                  >
+                    Logout
+                  </button>
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>
