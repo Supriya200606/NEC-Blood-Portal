@@ -47,7 +47,7 @@ const handledelete = async () => {
         donate blood.
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         {forms.length > 0 ? (
           forms.map((form, index) => (
             <div
@@ -55,23 +55,25 @@ const handledelete = async () => {
               className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
             >
               <h3 className="text-lg font-semibold text-gray-900">{form.tag}</h3>
-              <p className="text-gray-700">{form.fullname}</p>
-              <p className="text-gray-700">{form.bloodType}</p>
+              <ul className="list-disc pl-5">
+                <li className="text-gray-700">Full Name: {form.fullname}</li>
+                <li className="text-gray-700">Blood Type: {form.bloodType}</li>
+                <li className="text-gray-700">Address: {form.address}</li>
+                <li className="text-gray-700">Contact Number: {form.contactNum}</li>
+              </ul>
             </div>
           ))
         ) : (
           <p className="text-gray-600 text-center">No forms found.</p>
         )}
-        <div>
-          
-            <button
-              onClick={handledelete}
-              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-            >
-              Delete All Forms
-            </button>
-         
-        </div>
+      </div>
+      <div className="text-center mt-4">
+        <button
+          onClick={handledelete}
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+        >
+          Delete All Forms
+        </button>
       </div>
     </div>
   );
