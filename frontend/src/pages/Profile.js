@@ -161,14 +161,14 @@ const Profile = () => {
             <div className="flex mt-auto p-4 text text-center justify-between ">
               <button
                 onClick={deleteUser}
-                className="mt-6 px-6 py-2 gap-12 rounded-md bg-red-600 text-white hover:bg-red-800 hover:text-white focus:outline-none"
+                className="m-6 px-6 py-2  rounded-md bg-red-600 text-white hover:bg-red-800 hover:text-white focus:outline-none"
               >
                 Delete Profile
               </button>
 
               <button
                 onClick={deleteUser}
-                className="mt-6 px-6 py-2 rounded-md bg-red-600 text-white hover:bg-red-800 hover:text-white focus:outline-none"
+                className="m-6 px-6 py-2 rounded-md bg-red-600 text-white hover:bg-red-800 hover:text-white focus:outline-none"
               >
                 Edit Profile
               </button>
