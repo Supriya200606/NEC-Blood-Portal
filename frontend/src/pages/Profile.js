@@ -58,17 +58,16 @@ const Profile = () => {
   return (
     <div>
       <div className="min-h-screen flex justify-center items-center bg-slate-200">
-        <div className="bg-gradient-to-tr from-slate-50 via-grey-200 to-slate-200 w-4/5 rounded-3xl shadow-lg p-4 flex">
-          <div className="w-1/4 flex flex-col items-center border-r border-gray-300 pr-4">
+        <div className="bg-gradient-to-tr from-slate-50 via-grey-200 to-slate-200 w-full md:w-4/5 rounded-3xl shadow-lg p-4 flex flex-col md:flex-row">
+          <div className="w-full md:w-1/4 flex flex-col items-center border-b md:border-b-0 md:border-r border-gray-300 pb-4 md:pb-0 md:pr-4">
             <div className="text-center">
-              
-            <Link to="/showform">
-              <span className="text-3xl mb-6 text-red-600 font-bold p-2 border-red-400 rounded-full border-4 cursor-pointer">
-                Show my Forms
-              </span>
-            </Link>
-              <h1 className="mt-10 text-3xl   font-bold">Donation Detail</h1>
-              <h2 className="mt-4 text-xl font-bold text-red-700">{fname} {lname}</h2>
+              <Link to="/showform">
+                <span className="text-xl md:text-3xl mb-6 text-red-600 font-bold p-2 border-red-400 rounded-full border-4 cursor-pointer">
+                  Show my Forms
+                </span>
+              </Link>
+              <h1 className="mt-10 text-2xl md:text-3xl font-bold">Donation Detail</h1>
+              <h2 className="mt-4 text-lg md:text-xl font-bold text-red-700">{fname} {lname}</h2>
               <table className="mt-4 w-full text-left">
                 <thead>
                   <tr>
@@ -114,9 +113,9 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="w-3/4 pl-6">
-            <h3 className="text-4xl font-bold mb-6 text-red-600 font-serif">Profile</h3>
-            <form className="grid grid-cols-2 gap-6">
+          <div className="w-full md:w-3/4 pl-0 md:pl-6">
+            <h3 className="text-3xl md:text-4xl font-bold mb-6 text-red-600 font-serif">Profile</h3>
+            <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-lg font-bold text-gray-700">First Name</label>
                 <input
