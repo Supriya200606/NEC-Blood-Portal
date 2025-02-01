@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getFormById, deleteForm } from "../apis/endpoint";   
+import { getFormById } from "../apis/endpoint";  
+const DELETEFORM_URL = 'https://healthnet-v3g1.onrender.com/api/deleteform/:id';
+
 
 const Showform = () => {
   const [forms, setForms] = useState([]);
@@ -24,11 +26,22 @@ const Showform = () => {
 
 
   const deleteForm = async (id) => {
+    const token = localStorage.getItem('token'); 
 
     try {
-        const response = await deleteForm();
-  
+        const response = await fetch(DELETEFORM_URL, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete form');
+        }
         setForms(forms.filter((form) => form._id !== id));
+        console.log('Form deleted successfully');
     } catch (error) {
         console.error('Error deleting form:', error);
     }
