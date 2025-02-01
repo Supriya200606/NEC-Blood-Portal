@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getProfile,deleteProfile} from "../apis/endpoint";
+import { getProfile} from "../apis/endpoint";
 import { useAuth } from "../context/AuthContext";
+const DELETE_URL = 'https://healthnet-v3g1.onrender.com/api/delete/:id';
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -34,12 +35,21 @@ const Profile = () => {
     navigate("/");
   };
 
-  const handleDeleteProfile = async () => {
+
+  const deleteProfile = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const response = await deleteProfile();
+      const response = await fetch(DELETE_URL, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.ok) handleLogout();
+      else throw new Error("Failed to delete profile");
     } catch (error) {
-      console.log(error);
+      console.error("Error deleting profile:", error);
     }
   };
 
@@ -154,7 +164,7 @@ const Profile = () => {
          
         
           <button
-            onClick={handleDeleteProfile}
+            onClick={deleteProfile}
             className="mt-6 px-6 py-2 rounded-md bg-red-600 text-white hover:bg-red-800 focus:outline-none"
           >
             Delete Profile
