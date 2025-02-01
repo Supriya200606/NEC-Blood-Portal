@@ -27,12 +27,7 @@ const Showform = () => {
 
     try {
         const response = await deleteForm();
-       
-
-        if (!response.ok) {
-            throw new Error('Failed to delete form');
-        }
-
+  
         setForms(forms.filter((form) => form._id !== id));
     } catch (error) {
         console.error('Error deleting form:', error);
