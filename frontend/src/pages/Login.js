@@ -42,7 +42,7 @@ const LoginPage = () => {
       const response = await apiLogin(formData.email, formData.password);
       if (response.token) {
         login(response.user, response.token);
-       
+        setResponse('Login Successfully');
         navigate('/home');
       }
     } catch (error) {
@@ -67,7 +67,7 @@ const LoginPage = () => {
           <p className="text-3xl font-mono text-blue-400">"Saving Lives in One Click"</p>
         </div>
         <div className="m-4 md:m-20">
-          <button className="cursor-pointer border-b-2 text-red-600 font-thin border-black" onClick={() => navigate("/")}>
+          <button className="cursor-pointer border-b-2 text-red-600 font-bold border-black hover:bg-red-600 hover:text-white transition duration-300 ease-in-out py-2 px-4 rounded-full" onClick={() => navigate("/")}>
             Back to Home
           </button>
         </div>
@@ -84,7 +84,7 @@ const LoginPage = () => {
               Login
             </h1>
             <div className="mb-4">
-              <label  className="block mb-2">
+              <label className="block mb-2">
                 Email address
               </label>
               <input
@@ -126,15 +126,7 @@ const LoginPage = () => {
           </form>
         </div>
       </div>
-      {response && (
-        <div
-          className={`mt-6 p-4 rounded-md text-sm font-medium ${
-            response.includes("successful") ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-          }`}
-        >
-          {response}
-        </div>
-      )}
+     
       <p className="text-center mt-6">&copy; 2024 HealthNet. Saving Lives Digitally.</p>
     </div>
   );
