@@ -67,7 +67,7 @@ const LoginPage = () => {
           <p className="text-3xl font-mono text-blue-400">"Saving Lives in One Click"</p>
         </div>
         <div className="m-4 md:m-20">
-          <button className="cursor-pointer border-b-2 text-red-600 font-bold border-black hover:bg-red-600 hover:text-white transition duration-300 ease-in-out py-2 px-4 rounded-full" onClick={() => navigate("/")}>
+          <button className="cursor-pointer border-b-2 bg-slate-400 text-red-600 font-bold border-black hover:bg-red-600 hover:text-white transition duration-300 ease-in-out py-2 px-4 rounded-full" onClick={() => navigate("/")}>
             Back to Home
           </button>
         </div>

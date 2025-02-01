@@ -240,8 +240,8 @@ app.get("/api/myforms/:id",authenticateToken ,async (req, res) => {
 
 app.delete("/api/deleteform/:id", authenticateToken, async (req, res) => {
   try {
-    const formId = req.user.id;
-    const deletedForm = await Form.findByIdAndDelete(formId);
+    const { id } = req.params;
+    const deletedForm = await Form.findByIdAndDelete(id);
 
     if (!deletedForm) {
       return res.status(404).json({ error: "Form not found" });
