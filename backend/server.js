@@ -84,7 +84,7 @@ const formSchema = new mongoose.Schema({
 
 const Form = mongoose.model("Form", formSchema);
 
-// Authentication Middleware
+
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -97,7 +97,6 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-// Routes
 app.post("/api/register", async (req, res) => {
   try {
     const {

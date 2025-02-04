@@ -25,22 +25,20 @@ const Showform = () => {
 
 
   const deleteForm = async (id) => {
-    const token = localStorage.getItem('token'); // Get token from localStorage
+    const token = localStorage.getItem('token'); 
 
     try {
         const response = await fetch(`https://healthnet-v3g1.onrender.com/api/deleteform/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`, // Add token if required
+                'Authorization': `Bearer ${token}`, 
             },
         });
 
         if (!response.ok) {
             throw new Error('Failed to delete form');
         }
-
-        // Remove the deleted form from the state
         setForms(forms.filter((form) => form._id !== id));
         console.log('Form deleted successfully');
     } catch (error) {
