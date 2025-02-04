@@ -58,19 +58,19 @@ const Home = () => {
           <p className="text-2xl font-semibold mt-4">- Give the Gift of Life</p>
           <button
             onClick={() => navigate("/form")}
-            className="mt-6 px-8 py-3 bg-white text-red-600 font-bold rounded-lg shadow-lg hover:bg-red-100"
+            className="mt-6 mx-2 px-8 py-3 bg-white text-red-600 font-bold rounded-lg shadow-lg hover:bg-red-100"
           >
             Become a Donor
           </button>
           <button
             onClick={() => navigate("/form")}
-            className="mt-6 ml-6 px-8 py-3 bg-white text-red-600 font-bold rounded-lg shadow-lg hover:bg-red-100"
+            className="mt-6 mx-2 px-8 py-3 bg-white text-red-600 font-bold rounded-lg shadow-lg hover:bg-red-100"
           >
             Request for Blood
           </button>
           <button
             onClick={() => navigate("/ablood")}
-            className="mt-6 ml-6 px-8 py-3 bg-white text-red-600 font-bold rounded-lg shadow-lg hover:bg-red-100"
+            className="mt-6 mx-2 px-8 py-3 bg-white text-red-600 font-bold rounded-lg shadow-lg hover:bg-red-100"
           >
             About Blood
           </button>
