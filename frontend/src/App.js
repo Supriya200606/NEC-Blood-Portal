@@ -17,6 +17,9 @@ import Eligibility from "./info/Eligibility";
 import Guide from "./info/Guide";
 import HelpLine from "./info/HelpLine";
 import Blog from "./info/Blog";
+import UpdatePW from './pages/UpdatePW.js';
+
+
 import Campaigns from "./info/Campaigns";
 import Notification from "./info/Notification";
 import Volunteer from "./pages/Volunter";
@@ -77,6 +80,14 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+               <Route 
+                path="/upassword" 
+                element={
+                  <ProtectedRoute>
+                    <UpdatePW />
+                  </ProtectedRoute>
+                } 
+              />
             <Route
               path="/form"
               element={

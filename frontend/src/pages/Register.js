@@ -4,46 +4,23 @@ import { register} from "../apis/endpoint";
 
 
 const RegisterPage = () => {
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
+  const [fullname, setFname] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
   const [bloodType, setBloodType] = useState("");
   const [DOB,setDOB] = useState("");
-  const[gender,setGender]=useState("");
-  const[district,setDistrict]=useState("");
   const [error, setError] = useState("");
   const [response, setResponse] = useState("");
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   
-  const places = [
-    "Achham", "Arghakhanchi",
-    "Baglung","Baitadi",
-    "Bajhang", "Bajura",
-    "Banke", "Bara",
-    "Bardiya",   "Bhaktapur", "Bhojpur",   "Chitwan",   "Dadeldhura",  "Dailekh",  "Dang",   "Darchula","Dhading",  "Dhankuta",  "Dhanusha","Dolakha",  "Dolpa",
-    "Doti", "Gorkha",
-    "Gulmi", "Humla",   "Ilam",   "Jajarkot","Jhapa",   "Jumla","Kailali",   "Kalikot",   "Kanchanpur","Kapilvastu",   "Kaski",
-    "Kathmandu",
-    "Kavrepalanchok","Khotang",
-    "Lalitpur","Lamjung", "Mahottari", "Makwanpur", "Manang", "Morang",
- "Mugu","Mustang","Myagdi", "Nawalparasi (Bardaghat Susta East)",  "Nawalparasi (Bardaghat Susta West)",  "Nuwakot","Okhaldhunga",
-    "Palpa",
-    "Panchthar","Parbat",
-    "Parsa",    "Pyuthan","Ramechhap", "Rasuwa", "Rautahat",
-    "Rolpa",  "Rukum East",  "Rukum West",
-    "Rupandehi", "Salyan", "Sankhuwasabha",  "Saptari",
-    "Sarlahi",   "Sindhuli",  "Sindhupalchok",  "Siraha",  "Solukhumbu",  "Sunsari",  "Surkhet",
-    "Syangja",   "Tanahun", "Taplejung",   "Terhathum",
-    "Udayapur",
-  ];
+
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (!fname || !lname || !email || !contact || !password || !bloodType || !DOB || !gender || !district) {
+    if (!fullname || !email || !contact || !password || !bloodType || !DOB ) {
       setError("All fields are required.");
       return;
     }
@@ -65,25 +42,22 @@ const RegisterPage = () => {
       return;
     }
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters long.");
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long.");
       return;
     }
 
     setError("");
 
     setFname("");
-    setLname("");
     setContact("");
     setEmail("");
     setPassword("");
     setBloodType("");
     setDOB("");
-    setDistrict("");
-    setGender("");
 
     try {
-      const data = await register(fname, lname, contact, email, password,DOB,district,bloodType,gender);
+      const data = await register(fullname, contact,DOB,bloodType,email, password);
       console.log(data);
 
       if (data) {
@@ -106,26 +80,17 @@ const RegisterPage = () => {
         <form onSubmit={handleRegister} className="space-y-6">
           <h1 className="text-3xl font-bold text-red-800 border-b-2 border-black pb-2">Registration</h1>
           <div className="flex space-x-4">
-            <div className="w-1/2">
-              <label className="block mb-1">First Name</label>
+            <div >
+              <label className="block mb-1">Full Name</label>
               <input
                 type="text"
                 placeholder="Enter your first name"
-                value={fname}
+                value={fullname}
                 onChange={(e) => setFname(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded"
               />
             </div>
-            <div className="w-1/2">
-              <label className="block mb-1">Last Name</label>
-              <input
-                type="text"
-                placeholder="Enter your last name"
-                value={lname}
-                onChange={(e) => setLname(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-            </div>
+          
           </div>
           <div>
             <label className="block mb-1">Blood Group</label>
@@ -156,46 +121,7 @@ const RegisterPage = () => {
               className="w-full p-2 border border-gray-300 rounded"
             />
           </div>
-          <div>
-            <label className="block mb-1">Gender</label>
-            <div className="flex space-x-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  value="male"
-                  checked={gender === "male"}
-                  onChange={(e) => setGender(e.target.value)}
-                  className="mr-2"
-                />
-                Male
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  value="female"
-                  checked={gender === "female"}
-                  onChange={(e) => setGender(e.target.value)}
-                  className="mr-2"
-                />
-                Female
-              </label>
-            </div>
-          </div>
-          <div>
-            <label className="block mb-1">District</label>
-            <select
-              value={district}
-              onChange={(e) => setDistrict(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
-            >
-              <option value="">Select your district</option>
-              {places.map((place, index) => (
-                <option key={index} value={place}>
-                  {place}
-                </option>
-              ))}
-            </select>
-          </div>
+      
           <div>
             <label className="block mb-1">Contact Number</label>
             <input
@@ -207,7 +133,7 @@ const RegisterPage = () => {
             />
           </div>
           <div>
-            <label className="block mb-1">Email</label>
+            <label className="block mb-1">Email Address</label>
             <input
               type="email"
               placeholder="Enter your email"

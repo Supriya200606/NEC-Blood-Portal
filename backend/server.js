@@ -25,11 +25,7 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 const userSchema = new mongoose.Schema({
-  fname: {
-    type: String,
-    required: true,
-  },
-  lname: {
+  fullname: {
     type: String,
     required: true,
   },
@@ -43,18 +39,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  district: {
-    type: String,
-    required: true,
-  },
+
   bloodType: {
     type: String,
     required: true,
   },
-  gender: {
-    type: String,
-    required: true,
-  },
+
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 });
@@ -100,26 +90,24 @@ const authenticateToken = (req, res, next) => {
 app.post("/api/register", async (req, res) => {
   try {
     const {
-      fname,
-      lname,
+      fullname,
       contact,
+      DOB,
+      bloodType,
       email,
       password,
-      DOB,
-      district,
-      bloodType,
-      gender,
+      
+      
     } = req.body;
     const user = new User({
-      fname,
-      lname,
+      fullname,
       contact,
+      DOB,
+      bloodType,
       email,
       password,
-      DOB,
-      district,
-      bloodType,
-      gender,
+     
+      
     });
     await user.save();
 
@@ -251,6 +239,32 @@ app.delete("/api/deleteform/:id", authenticateToken, async (req, res) => {
     console.error("Error during form deletion:", error);
     res.status(500).json({ error: "An internal server error occurred" });
   }
+});
+
+
+app.put("/api/updatepassword", authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { email, password } = req.body;
+
+    const updateData = {};
+    if (email) updateData.email = email;
+    if (password) updateData.password = await bcrypt.hash(password, 10);
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+      new: true,
+    }).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "User updated successfully", user: updatedUser });
+  } catch (error) {
+    console.error("Error during update:", error);
+    res.status(500).json({ error: "An internal server error occurred" });
+  }
+
 });
 
 

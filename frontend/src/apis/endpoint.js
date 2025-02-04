@@ -4,15 +4,16 @@ const PROFILE_URL = 'https://healthnet-v3g1.onrender.com/api/profile';
 const GET_URL = 'https://healthnet-v3g1.onrender.com/api/getform';
 const UPLOAD_URL = 'https://healthnet-v3g1.onrender.com/api/uploadform';
 const SHOWFORM_URL ='https://healthnet-v3g1.onrender.com/api/myforms/:id';
+const UPDATEPASSWORD_URL='https://healthnet-v3g1.onrender.com/api/updatepassword';
 
-export const register = async (fname, lname, contact ,email, password,DOB,district,bloodType,gender) => {
+export const register = async (fullname, contact,DOB,bloodType ,email, password) => {
   const token = localStorage.getItem('token');
 
   try {
     const res = await fetch(REGISTER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json','Authorization': `Bearer ${token}` },
-      body: JSON.stringify({ fname, lname, contact ,email, password,DOB,district,bloodType,gender })
+      body: JSON.stringify({ fullname, contact ,DOB,bloodType ,email, password})
     });
 
     if (!res.ok) {
@@ -150,3 +151,27 @@ export const getFormById = async (id) => {
   }
 };
 
+export const updatePassword = async ({ email, password }) => {
+  const token = localStorage.getItem('token');
+  
+  try {
+    const response = await fetch(UPDATEPASSWORD_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(errorMessage || 'Failed to update profile');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Update profile error:', error);
+    throw error;
+  }
+};
