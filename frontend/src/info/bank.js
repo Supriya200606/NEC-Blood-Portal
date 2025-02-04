@@ -69,7 +69,7 @@ const Bank = () => {
 
   return (
     <>
-      <div className="overflow-x-auto p-4 sm:p-10 rounded-lg">
+      <div className="overflow-x-auto p-4 pt-10 sm:p-10 rounded-lg">
         <table className="min-w-full bg-white border border-gray-300 shadow-md">
           <thead>
             <tr className="bg-red-50 text-lg sm:text-2xl font-bold">
