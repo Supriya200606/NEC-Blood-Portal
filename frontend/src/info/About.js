@@ -1,8 +1,7 @@
 import React from "react";
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import sujan from "../assets/DSC_152.JPG";
-import ankit from "../assets/1737610338670_1.jpg";
+
 const About = () => {
   const navigate = useNavigate();
 
@@ -88,36 +87,8 @@ const About = () => {
           <img src={logo} alt="logo" className="h-1/2 rounded-full" />
         </div>
 
-        <div className="text-center gap-y-6">
-          <h2 className="lg:text-5xl text-3xl px-2 mt-10 mb-10 text-slate-700 font-bold text-center">
-            Meet Our Team
-          </h2>
-          <div className="lg:text-2xl text-xl font-mono leading-relaxed pr-4 pl-4 lg:pr-48 lg:pl-48 mb-16">
-            We are a passionate team of students pursuing our educations in the
-            field of Information Technology, and our objective is to devise a
-            solution for society that will make a difference in people's lives.
-            Our team believes in the power of technology to bring a positive
-            change to the world, and with HealthNet, we're committed to making
-            blood donation smooth and efficient.
-          </div>
-        </div>
-        <div className="flex flex-wrap justify-around items-center h-auto">
-          <div className="flex flex-col items-center p-6 w-full sm:w-1/2 lg:w-1/4">
-            <div className="border-4 w-1/2 rounded-full mb-4">
-              <img src={sujan} alt="logo" className="rounded-full" />
-            </div>
-            <p className="text-3xl font-bold mb-2">Sujan Mishra</p>
-            <div className="rounded-3xl font-bold text-lg px-4 py-2 bg-zinc-400">
-              UI/UX & Frontend
-            </div>
-            <p className="font-serif m-6 text-md">
-              A very honorable student of Shreeyantra College, always moving
-              forward in every endeavor. The work done by him can be considered
-              as the world's finest crafts, and he is a very good friend of
-              mine.
-            </p>
-          </div>
-
+     
+      
           <div className="flex flex-col items-center p-6 w-full sm:w-1/2 lg:w-1/4">
             <div className="border-4 w-1/2 rounded-full mb-4">
               <img src={ankit} alt="logo" className="rounded-full" />
