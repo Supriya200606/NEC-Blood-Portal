@@ -89,19 +89,7 @@ const About = () => {
 
      
       
-          <div className="flex flex-col items-center p-6 w-full sm:w-1/2 lg:w-1/4">
-            <div className="border-4 w-1/2 rounded-full mb-4">
-              <img src={ankit} alt="logo" className="rounded-full" />
-            </div>
-            <p className="text-3xl font-bold mb-2">Ankit Dhakal</p>
-            <div className="rounded-3xl font-bold text-lg px-4 py-2 bg-zinc-400">
-              Backend
-            </div>
-            <p className="font-serif m-6 text-md">
-              A proud of Shreeyantra College who has successfully proven his work and intelligence in his 4 year career.
-              He is very friendly toward his every friends and very responsible toward his duty.
-            </p>
-          </div>
+        
         </div>
       </div>
     </div>
