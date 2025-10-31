@@ -1,28 +1,27 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const connectDB = require("./db");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-require("dotenv").config();
+
 
 const app = express();
 
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://healthnet-seven.vercel.app",
+    origin: ["http://localhost:3000", "https://healthnet-seven.vercel.app"],
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
     headers: ["Content-Type", "Authorization"],
   })
 );
 
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-  })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+// Connect to MongoDB (moved to ./db.js)
+// connectDB will exit the process if connection fails
+// (call it before starting the HTTP server)
 
 const userSchema = new mongoose.Schema({
   fullname: {
@@ -74,7 +73,6 @@ const formSchema = new mongoose.Schema({
 
 const Form = mongoose.model("Form", formSchema);
 
-
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -99,6 +97,12 @@ app.post("/api/register", async (req, res) => {
       
       
     } = req.body;
+    // Server-side password validation: accept either a strong password or a hex-only password
+    const strongPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    const hexPwd = /^[a-fA-F0-9]{8,}$/;
+    if (!strongPwd.test(password) && !hexPwd.test(password)) {
+      return res.status(400).json({ error: 'Password must be at least 8 characters and either include upper, lower, number and symbol, or be a hex string (0-9, a-f).' });
+    }
     const user = new User({
       fullname,
       contact,
@@ -137,7 +141,17 @@ app.post("/api/login", async (req, res) => {
       { expiresIn: "24h" }
     );
 
-    res.json({ token, user: { id: user._id, email: user.email } });
+    res.json({ 
+      token, 
+      user: { 
+        id: user._id, 
+        email: user.email, 
+        fullname: user.fullname,
+        contact: user.contact,
+        DOB: user.DOB,
+        bloodType: user.bloodType
+      } 
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -267,8 +281,58 @@ app.put("/api/updatepassword", authenticateToken, async (req, res) => {
 
 });
 
+// Add health check route
+app.get('/ping', (req, res) => {
+  res.send('pong');
+});
+
+// Admin endpoint to delete user by email (for password reset issues)
+app.delete("/api/admin/delete-user-by-email", async (req, res) => {
+  try {
+    const { email } = req.body;
+    
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
+    
+    // Find and delete user
+    const deletedUser = await User.findOneAndDelete({ email: email });
+    
+    if (!deletedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    
+    // Also delete associated forms
+    await Form.deleteMany({ userId: deletedUser._id });
+    
+    res.json({ 
+      message: "User and associated data deleted successfully",
+      deletedUser: {
+        id: deletedUser._id,
+        email: deletedUser.email,
+        fullname: deletedUser.fullname
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get all users (Admin endpoint for management)
+app.get("/api/admin/users", async (req, res) => {
+  try {
+    const users = await User.find({}, '-password').sort({ createdAt: -1 });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 const PORT = process.env.PORT || 5000;
-app.listen(5000, () => {
-  console.log(`Server is running on port ${PORT}`);
+
+// Start server after DB connection established
+connectDB().then(() => {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
 });

@@ -1,46 +1,46 @@
 import React from "react";
 
 const HelpLine = () => {
-  
+  // Update these contact numbers to the real NEC Medical Hospital / Nandha Engineering College contacts
   const contacts = [
-{ name: "Emergency Services", number: "100" },
-{name: "Ambulance services", number:"101"},
-{ name: "Nearest Blood Bank", number: "023-541833" },
-{ name: "NPH:General Helpline", number: "01-4412430" },
-
-];
+    { name: "Nandha Medical Hospital - Emergency", number: "07373711224" },
+    { name: "Nandha Medical Hospital - General Line", number: "04294-222222" },
+    { name: "Nandha Medical Hospital - Emergency", number: "04294-225585" },
+    { name: "Campus Security (24/7)", number: "04294-226393" },
+    { name: "Ambulance / Patient Transport", number: "919750770555" },
+  ];
 
 
   const faqs = [
     {
-      question: "Who is eligible to donate blood?",
+      question: "Who is eligible to donate blood through NEC Blood Portal?",
       answer:
-        "Anyone between the ages of 18 and 65, weighing at least 50 kg, and in good health can donate blood. Ensure you are not on any medication or suffering from conditions that may disqualify you.",
+        "Healthy adults aged 18-65 who meet the medical screening criteria (weight above 50kg, good health, and no recent illnesses) are eligible. The Nandha Medical Hospital team performs health screening before donation.",
     },
     {
-      question: "What precautions should I take before donating?",
+      question: "What precautions should I take before donating blood?",
       answer:
-        "Eat a healthy meal, stay hydrated, and avoid alcohol or smoking 24 hours before donating.",
+        "Eat a balanced meal, drink plenty of fluids, get adequate rest, and avoid alcohol for 24 hours prior. Bring a valid ID and ensure you haven't taken any medications that might affect donation eligibility.",
     },
     {
-      question: "Where can I find the nearest blood donation camp?",
+      question: "How do I find blood donors through NEC Blood Portal?",
       answer:
-        "Use the location feature in our app to find the nearest donation camp or blood bank.",
+        "Use the blood search feature in the portal to find donors by blood type and location. You can contact donors directly through the provided contact options - email or WhatsApp messaging.",
     },
     {
       question: "What should I do if I feel unwell after donating?",
       answer:
-        "Contact your nearest medical center or use the emergency helpline in the app for immediate assistance.",
+        "Contact the Nandha Medical Hospital emergency line immediately or visit the nearest medical facility. Keep the donor information card provided after donation for reference.",
     },
     {
       question: "How often can I donate blood?",
       answer:
-        "You can donate whole blood every 56 days and platelets every 7 days, up to 24 times a year.",
+        "Follow medical guidelines: whole blood donations are typically allowed once every 56 days (8 weeks). Always consult with medical professionals before your next donation.",
     },
     {
-      question: "What are the health benefits of donating blood?",
+      question: "How do I register as a blood donor on NEC Blood Portal?",
       answer:
-        "Donating blood can help reduce harmful iron stores, improve cardiovascular health, and even stimulate blood cell production.",
+        "Create an account using your email, fill out the donor registration form with your blood type and contact details. Ensure all information is accurate for emergency blood requests.",
     },
   ];
 
@@ -51,7 +51,7 @@ const HelpLine = () => {
       <div>
         <div className="p-6 min-h-screen">
           <h1 className=" text-center lg:text-5xl text-slate-700 font-bold">
-            Helpline Section
+            Nandha Medical Hospital — Helpline (Nandha Engineering College)
           </h1>
 
           <div className=" shadow-lg rounded-md p-6 mb-6">

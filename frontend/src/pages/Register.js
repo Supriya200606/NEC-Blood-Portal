@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { register} from "../apis/endpoint";
-
+import { register } from "../apis/endpoint";
 
 const RegisterPage = () => {
   const [fullname, setFname] = useState("");
@@ -9,32 +8,25 @@ const RegisterPage = () => {
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
   const [bloodType, setBloodType] = useState("");
-  const [DOB,setDOB] = useState("");
+  const [DOB, setDOB] = useState("");
   const [error, setError] = useState("");
   const [response, setResponse] = useState("");
   const [userData, setUserData] = useState(null);
+  const [showPassword, setShowPassword] = useState(false); // 👈 added for toggle
   const navigate = useNavigate();
-  
-
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (!fullname || !email || !contact || !password || !bloodType || !DOB ) {
+    if (!fullname || !email || !contact || !password || !bloodType || !DOB) {
       setError("All fields are required.");
       return;
     }
-    
+
     if (!/^\d{10}$/.test(contact)) {
       setError("Please enter a valid 10-digit contact number.");
       return false;
     }
- 
-  
-
-
-
- 
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -42,28 +34,32 @@ const RegisterPage = () => {
       return;
     }
 
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters long.");
+    const strongPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    const hexPwd = /^[a-fA-F0-9]{8,}$/;
+    if (!strongPwd.test(password) && !hexPwd.test(password)) {
+      setError(
+        "Password must be at least 8 characters and either include uppercase, lowercase, number and symbol, or be a hex string (0-9, a-f)."
+      );
       return;
     }
 
     setError("");
 
-    setFname("");
-    setContact("");
-    setEmail("");
-    setPassword("");
-    setBloodType("");
-    setDOB("");
-
     try {
-      const data = await register(fullname, contact,DOB,bloodType,email, password);
+      const data = await register(fullname, contact, DOB, bloodType, email, password);
       console.log(data);
 
       if (data) {
         setUserData(data);
         navigate("/login");
-  
+
+        // clear fields only after success
+        setFname("");
+        setContact("");
+        setEmail("");
+        setPassword("");
+        setBloodType("");
+        setDOB("");
       } else {
         setResponse("Registration failed.");
       }
@@ -78,40 +74,41 @@ const RegisterPage = () => {
       <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleRegister} className="space-y-6">
-          <h1 className="text-3xl font-bold text-red-800 border-b-2 border-black pb-2">Registration</h1>
+          <h1 className="text-3xl font-bold text-red-800 border-b-2 border-black pb-2">
+            Registration
+          </h1>
           <div className="flex space-x-4">
-            <div >
+            <div>
               <label className="block mb-1">Full Name</label>
               <input
                 type="text"
-                placeholder="Enter your first name"
+                placeholder="Enter your full name"
                 value={fullname}
                 onChange={(e) => setFname(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded"
               />
             </div>
-          
           </div>
+
           <div>
             <label className="block mb-1">Blood Group</label>
-            
-                <select
-                value={bloodType}
-                onChange={(e) => setBloodType(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
-                >
-                <option value="">Select your blood group</option>
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="B-">B-</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-                <option value="O+">O+</option>
-                <option value="O-">O-</option>
-                </select>
-              
+            <select
+              value={bloodType}
+              onChange={(e) => setBloodType(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded"
+            >
+              <option value="">Select your blood group</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
           </div>
+
           <div>
             <label className="block mb-1">DOB</label>
             <input
@@ -121,7 +118,7 @@ const RegisterPage = () => {
               className="w-full p-2 border border-gray-300 rounded"
             />
           </div>
-      
+
           <div>
             <label className="block mb-1">Contact Number</label>
             <input
@@ -132,6 +129,7 @@ const RegisterPage = () => {
               className="w-full p-2 border border-gray-300 rounded"
             />
           </div>
+
           <div>
             <label className="block mb-1">Email Address</label>
             <input
@@ -142,23 +140,36 @@ const RegisterPage = () => {
               className="w-full p-2 border border-gray-300 rounded"
             />
           </div>
+
+          {/* ✅ Password with Show/Hide toggle */}
           <div>
             <label className="block mb-1">Password</label>
-            <input
-              type="password"
-              placeholder="Enter your new password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your new password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-2 top-2 text-sm text-gray-600 hover:text-gray-800"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
+
           <button
             type="submit"
-            className="w-full py-2 bg-red-500 text-white rounded-full font-bold"
+            className="w-full py-2 bg-red-500 text-white rounded-full font-bold cursor-pointer"
           >
             Register
           </button>
         </form>
+
         {response && (
           <div
             className={`mt-6 p-4 rounded-md text-sm font-medium ${
@@ -170,6 +181,7 @@ const RegisterPage = () => {
             {response}
           </div>
         )}
+
         <div className="mt-6 text-center">
           <p className="text-lg">Already have an account?</p>
           <Link to="/" className="text-blue-500 underline">
@@ -180,4 +192,5 @@ const RegisterPage = () => {
     </div>
   );
 };
+
 export default RegisterPage;

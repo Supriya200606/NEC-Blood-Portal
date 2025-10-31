@@ -16,6 +16,7 @@ const About = () => {
                 <h1 className="lg:text-6xl text-4xl px-2 text-slate-700 font-bold">
                   Every Drop Counts
                 </h1>
+              
                 <p className="text-xl font-sans mb-8">
                   Your blood donation can save up to three lives. Join our
                   mission to make a difference in your community.
@@ -39,60 +40,29 @@ const About = () => {
               </div>
             </div>
           </section>
-
-          <div className="flex flex-wrap justify-evenly items-center gap-6">
-            <div className="p-4 rounded-3xl bg-gradient-to-tr from-stone-400 via-grey-200 to-red-500 mb-10 w-full sm:w-auto">
-              <div className="pb-6 p-6 text-3xl font-bold text-[#ff2323] bg-gray-100 border-4 rounded-3xl">
-                Verified Donors
-                <p className="flex text-justify justify-center">19</p>
-              </div>
-            </div>
-            <div className="p-4 rounded-3xl bg-gradient-to-tr from-stone-400 via-grey-200 to-red-500 mb-10 w-full sm:w-auto">
-              <div className="p-6 text-3xl font-bold text-[#ff2323] bg-gray-100 border-4 rounded-3xl">
-                Active Donors
-                <p className="flex text-justify justify-center">10</p>
-              </div>
-            </div>
-            <div className="p-4 rounded-3xl bg-gradient-to-tr from-stone-400 via-grey-200 to-red-500 mb-10 w-full sm:w-auto">
-              <div className="pb-6 p-6 text-3xl font-bold text-[#ff2323] bg-gray-100 border-4 rounded-3xl">
-                Total Donations
-                <p className="flex text-justify justify-center">34</p>
-              </div>
-            </div>
-            <div className="p-4 rounded-3xl bg-gradient-to-tr from-stone-400 via-grey-200 to-red-500 mb-10 w-full sm:w-auto">
-              <div className="p-6 text-3xl font-bold text-[#ff2323] bg-gray-100 border-4 rounded-3xl">
-                Lives Saved
-                <p className="flex text-justify justify-center">--</p>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row items-center">
           <div className="m-10 flex-1 items-center mb-10 lg:text-6xl text-4xl px-2 text-[#fc2323] mt-16 font-extrabold text-center">
-            What is HealthNet?
+            About Us
             <p className="lg:text-2xl text-xl text-black font-bold m-10 text-center">
-              HealthNet is an innovative platform devoted to combating blood
-              deficiency and thereby enhancing healthcare access within Nepal.
-              Our mission is simple yet deep: to create a connected community
-              where blood donors, recipients, and volunteers come together to
-              save lives and build a stronger, healthier society. In a country
-              where the compatibility of blood donors often becomes a matter of
-              life and death, HealthNet bridges the critical gap between donors
-              and those in need. Our advanced technology and user-centric design
-              make blood donation accessible and seamless, fostering a culture
-              of support and giving.
+              Welcome to the NEC Blood Donation Portal, a collaborative
+              initiative by Nandha Engineering College (NEC) and Nandha Medical
+              Hospital, Erode. Our mission is to save lives through awareness,
+              technology, and compassion by connecting voluntary donors with
+              those in need — right from our own campus. At NEC, we believe that
+              education goes beyond academics — it’s about creating responsible
+              citizens who give back to society. With the support of Nandha
+              Medical Hospital’s healthcare team, the NEC Blood Donation Portal
+              serves as a bridge between donors, hospitals, and patients
+              requiring urgent blood transfusions.
             </p>
           </div>
           <img src={logo} alt="logo" className="h-1/2 rounded-full" />
         </div>
-
-     
-      
-        
-       
       </div>
     </div>
   );
 };
+
 export default About;

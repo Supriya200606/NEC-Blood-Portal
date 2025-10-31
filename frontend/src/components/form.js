@@ -12,7 +12,16 @@ const Form = () => {
     fullname: "", contactnumber: "", email: "", tag: "", bloodType: "", age: "", weight: "", gender: "", address: "", agreeTerms: false,
   });
 
-  const districts = ["Achham", "Arghakhanchi", "Baglung", "Baitadi", "Bajhang", "Bajura", "Banke", "Bara", "Bardiya", "Bhaktapur", "Bhojpur", "Chitwan", "Dadeldhura", "Dailekh", "Dang", "Darchula", "Dhading", "Dhankuta", "Dhanusha", "Dolakha", "Dolpa", "Doti", "Gorkha", "Gulmi", "Humla", "Ilam", "Jajarkot", "Jhapa", "Jumla", "Kailali", "Kalikot", "Kanchanpur", "Kapilvastu", "Kaski", "Kathmandu", "Kavrepalanchok", "Khotang", "Lalitpur", "Lamjung", "Mahottari", "Makwanpur", "Manang", "Morang", "Mugu", "Mustang", "Myagdi", "Nawalparasi (Bardaghat Susta East)", "Nawalparasi (Bardaghat Susta West)", "Nuwakot", "Okhaldhunga", "Palpa", "Panchthar", "Parbat", "Parsa", "Pyuthan", "Ramechhap", "Rasuwa", "Rautahat", "Rolpa", "Rukum East", "Rukum West", "Rupandehi", "Salyan", "Sankhuwasabha", "Saptari", "Sarlahi", "Sindhuli", "Sindhupalchok", "Siraha", "Solukhumbu", "Sunsari", "Surkhet", "Syangja", "Tanahun", "Taplejung", "Terhathum", "Udayapur"];
+  // ✅ Tamil Nadu Districts
+  const districts = [
+    "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri",
+    "Dindigul", "Erode", "Kallakurichi", "Kanchipuram", "Kanyakumari", "Karur",
+    "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris",
+    "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivagangai",
+    "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli",
+    "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore",
+    "Viluppuram", "Virudhunagar"
+  ];
 
   const validateForm = () => {
     const { fullname, contactnumber, email, tag, bloodType, age, weight, gender, address, agreeTerms } = requesterData;
@@ -59,9 +68,9 @@ const Form = () => {
           <div>
             <label className="block mb-1">Who Are You?</label>
             <select name="tag" value={requesterData.tag} onChange={(e) => setRequesterData({ ...requesterData, tag: e.target.value })} className="w-full border rounded p-2">
-              <option className="text-gray-200">Donor Or Recepient</option>
+              <option className="text-gray-200">Donor Or Recipient</option>
               <option value="donor">Donor</option>
-              <option value="recepient">Recepient</option>
+              <option value="recipient">Recipient</option>
             </select>
           </div>
           <div>

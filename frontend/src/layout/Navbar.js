@@ -72,7 +72,7 @@ const Navbar = () => {
               className="text-3xl font-bold cursor-pointer"
               onClick={() => navigate("/home")}
             >
-              HealthNet
+              NEC Blood Portal
             </h1>
           </div>
 
@@ -123,18 +123,6 @@ const Navbar = () => {
               <li>
                 <a href="/home" className= "hover:text-red-500 ml-4">
                   Home
-                </a>
-              </li>
-              
-              
-              <li >
-                <a href="/bank" className="  hover:text-red-500">
-                  Blood Banks
-                </a>
-              </li>
-              <li >
-                <a href="/blog" className="  hover:text-red-500">
-                  Blogs
                 </a>
               </li>
               <li>
@@ -234,12 +222,6 @@ const Navbar = () => {
                         className="px-4 py-2 hover:bg-red-500 hover:text-white cursor-pointer"
                       >
                         HelpLine
-                      </li>
-                      <li
-                        onClick={() => navigate("/volunteer")}
-                        className="px-4 py-2 hover:bg-red-500 hover:text-white  cursor-pointer"
-                      >
-                        Become A Volunteer
                       </li>
                     </ul>
                   </div>

@@ -26,9 +26,10 @@ const Showform = () => {
 
   const deleteForm = async (id) => {
     const token = localStorage.getItem('token'); 
+    const API_BASE = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000';
 
     try {
-        const response = await fetch(`https://healthnet-v3g1.onrender.com/api/deleteform/${id}`, {
+        const response = await fetch(`${API_BASE}/api/deleteform/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -69,8 +70,12 @@ useEffect(() => {
               <ul className="list-disc pl-5">
                 <li className="text-gray-700">Full Name: {form.fullname}</li>
                 <li className="text-gray-700">Blood Type: {form.bloodType}</li>
+                <li className="text-gray-700">Email: {form.email}</li>
+                <li className="text-gray-700">Age: {form.age} years</li>
+                <li className="text-gray-700">Weight: {form.weight} kg</li>
+                <li className="text-gray-700">Gender: {form.gender}</li>
+                <li className="text-gray-700">Contact Number: {form.contactnumber || "Not provided"}</li>
                 <li className="text-gray-700">Address: {form.address}</li>
-                <li className="text-gray-700">Contact Number: {form.contactNumber}</li>
                 <div className="text-center mt-4">
                   <button
               onClick={() => deleteForm(form._id)}

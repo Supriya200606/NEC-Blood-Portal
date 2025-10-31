@@ -1,10 +1,15 @@
-const REGISTER_URL = 'https://healthnet-v3g1.onrender.com/api/register';
-const LOGIN_URL = 'https://healthnet-v3g1.onrender.com/api/login';
-const PROFILE_URL = 'https://healthnet-v3g1.onrender.com/api/profile';
-const GET_URL = 'https://healthnet-v3g1.onrender.com/api/getform';
-const UPLOAD_URL = 'https://healthnet-v3g1.onrender.com/api/uploadform';
-const SHOWFORM_URL ='https://healthnet-v3g1.onrender.com/api/myforms/:id';
-const UPDATEPASSWORD_URL='https://healthnet-v3g1.onrender.com/api/updatepassword';
+// Use environment variable when available (REACT_APP_API_URL) with a sensible fallback.
+// Note: place .env with REACT_APP_API_URL at the frontend project root (not inside src) so Create React App picks it up.
+const API_BASE = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000';
+
+const REGISTER_URL = `${API_BASE}/api/register`;
+const LOGIN_URL = `${API_BASE}/api/login`;
+const PROFILE_URL = `${API_BASE}/api/profile`;
+const GET_URL = `${API_BASE}/api/getform`;
+const UPLOAD_URL = `${API_BASE}/api/uploadform`;
+const SHOWFORM_URL = `${API_BASE}/api/myforms/:id`;
+const UPDATEPASSWORD_URL = `${API_BASE}/api/updatepassword`;
+
 
 export const register = async (fullname, contact,DOB,bloodType ,email, password) => {
   const token = localStorage.getItem('token');
@@ -28,25 +33,32 @@ export const register = async (fullname, contact,DOB,bloodType ,email, password)
   }
 };
 
-export const login = async (email,password) => {
-  const token = localStorage.getItem('token');
-
-
+export const login = async (email, password) => {
   try {
     const res = await fetch(LOGIN_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json','Authorization': `Bearer ${token}` },
-      body: JSON.stringify({email,password})
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
     });
 
     if (!res.ok) {
-      const errorMessage = await res.text();
-      throw new Error(`Failed to login: ${errorMessage}`);
+      // Try to parse JSON error response first
+      try {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Login failed');
+      } catch (jsonError) {
+        // If JSON parsing fails, use status text
+        throw new Error(`Login failed: ${res.status} ${res.statusText}`);
+      }
     }
 
     const data = await res.json();
     return data;
   } catch (error) {
+    // If it's a network error or other fetch error
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      throw new Error('Network error. Please check your connection.');
+    }
     throw error;
   }
 };
