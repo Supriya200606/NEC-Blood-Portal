@@ -7,7 +7,7 @@ const LOGIN_URL = `${API_BASE}/api/login`;
 const PROFILE_URL = `${API_BASE}/api/profile`;
 const GET_URL = `${API_BASE}/api/getform`;
 const UPLOAD_URL = `${API_BASE}/api/uploadform`;
-const SHOWFORM_URL = `${API_BASE}/api/myforms/:id`;
+const SHOWFORM_URL = `${API_BASE}/api/myforms`;
 const UPDATEPASSWORD_URL = `${API_BASE}/api/updatepassword`;
 
 
@@ -138,17 +138,16 @@ export const showBloodRequestData = async(tag)=>{
 
 
 export const getFormById = async (id) => {
+  if (!id) return [];
   const token = localStorage.getItem('token');
-  const url =SHOWFORM_URL.replace(':id', id);
-
+  const url = `${SHOWFORM_URL}/${id}`;
 
   try {
-    const res = await fetch(url,{
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         'Authorization': `Bearer ${token}`
-
       },
     });
 
@@ -156,10 +155,10 @@ export const getFormById = async (id) => {
       throw new Error(`HTTP error! Status: ${res.status}`);
     }
 
-    return await res.json(); // Ensure JSON is returned here
+    return await res.json();
   } catch (error) {
     console.error("API Error:", error);
-    return null;
+    return [];
   }
 };
 

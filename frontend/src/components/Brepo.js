@@ -5,28 +5,14 @@ import { useNavigate } from "react-router-dom";
 const BRepo = () => {
     const navigate= useNavigate();
 
-    const[donorsData,setDonorsData]=useState([{
-        fullname:"",
-        contactnumber:"",
-        email:"",
-        bloodType:"",
-        age:'',
-        weight:'',
-        gender:'',
-        address:'',
-        
-        
-    }]);
-    useEffect(()=>{
-        const getDonors = async()=>{
-            const res = await showBloodRequestData('donor');
-            if(res.status === 400){
-                throw new Error('Failed to get profile');
-            }
-            setDonorsData(res);
-        }
-        getDonors();
-    },[]);
+  const[donorsData,setDonorsData]=useState([]);
+  useEffect(()=>{
+    const getDonors = async()=>{
+      const res = await showBloodRequestData('donor');
+      setDonorsData(Array.isArray(res) ? res : []);
+    }
+    getDonors();
+  },[]);
 
 
 

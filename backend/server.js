@@ -201,6 +201,10 @@ app.post("/api/uploadform", authenticateToken, async (req, res) => {
       userId
      
     } = req.body;
+    // Debug: log who is authenticated and what userId was passed in the body
+    console.log('/api/uploadform called - authenticated user id=', req.user && req.user.id, ' body.userId=', userId);
+    // Force the userId from the authenticated token to avoid mismatches
+    const ownerId = req.user && req.user.id;
     const form = new Form({
       fullname,
       contactnumber,
@@ -211,11 +215,12 @@ app.post("/api/uploadform", authenticateToken, async (req, res) => {
       weight,
       gender,
       address,
-      userId
-    
+      userId: ownerId
     });
-    await form.save();
-    res.status(201).json({ message: "Form uploaded successfully" });
+    const saved = await form.save();
+    console.log('/api/uploadform saved form id=', saved._id, ' saved.userId=', saved.userId);
+    // Return the saved document so frontend (and tests) can confirm saved id
+    res.status(201).json({ message: "Form uploaded successfully", form: saved });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -232,10 +237,26 @@ app.get("/api/myforms/:id",authenticateToken ,async (req, res) => {
   const userId = req.user.id;
 
   try {
+    // Debug: log the param id (if any) and the authenticated user id
+    console.log('/api/myforms called - params.id=', req.params.id, ' authenticated user id=', req.user && req.user.id);
     const forms = await Form.find({ userId }); 
+    console.log(`/api/myforms returning ${forms.length} forms for user ${userId}`);
     res.status(200).json(forms);
   } catch (error) {
     res.status(500).json({ message: "Error fetchig forms", error });
+  }
+});
+
+// Convenience route: return forms for the authenticated user (no id param required)
+app.get("/api/myforms", authenticateToken, async (req, res) => {
+  const userId = req.user && req.user.id;
+  console.log('/api/myforms (no param) called - authenticated user id=', userId);
+  try {
+    const forms = await Form.find({ userId });
+    console.log(`/api/myforms (no param) returning ${forms.length} forms for user ${userId}`);
+    res.status(200).json(forms);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching forms', error });
   }
 });
 

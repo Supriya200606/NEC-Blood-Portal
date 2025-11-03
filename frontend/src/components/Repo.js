@@ -6,24 +6,14 @@ import { useNavigate } from 'react-router-dom';
 const Repo = () => {
 const navigate= useNavigate();
 
-  const [recepientData,setRecepientData ] = useState([{
-    fullname:"",
-    contactnumber:"",
-    email:"",
-    bloodType:"",
-    age:'',
-    weight:'',
-    gender:'',
-    address:'',
-  }]);
+  const [recepientData,setRecepientData ] = useState([]);
     
     useEffect(()=>{
       const getRecepient = async()=>{
-        const res = await showBloodRequestData("recepient");
-        if(res.status === 400){
-          throw new Error('Failed to get profile');
-        }
-        setRecepientData(res);
+        // tag must match what the form writes: "recipient"
+        const res = await showBloodRequestData("recipient");
+        // showBloodRequestData returns parsed JSON (array). Just set it.
+        setRecepientData(Array.isArray(res) ? res : []);
       }
       getRecepient();
     },[]);

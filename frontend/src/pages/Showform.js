@@ -1,27 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { getFormById } from "../apis/endpoint";  
+import { getFormById } from "../apis/endpoint";
 
 
 const Showform = () => {
   const [forms, setForms] = useState([]);
 
- 
-    const fetchForms = async () => {
-      try {
-        const res = await getFormById();
-        console.log("Fetched forms:", res);
-
-        const data = res.data || res;
-        if (!data || Object.keys(data).length === 0) {
-          throw new Error("No form data found");
-       }
-
-        setForms(Array.isArray(data) ? data : [data]);
-
-      } catch (error) {
-        console.error("Error fetching forms:", error);
+  const fetchForms = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const userId = user && user.id;
+      if (!userId) {
+        console.warn('No user id in localStorage; user may not be logged in.');
+        setForms([]);
+        return;
       }
-    };
+
+      const data = await getFormById(userId);
+      console.log("Fetched forms:", data);
+
+      if (!data || (Array.isArray(data) && data.length === 0)) {
+        setForms([]);
+        return;
+      }
+
+      setForms(Array.isArray(data) ? data : [data]);
+    } catch (error) {
+      console.error("Error fetching forms:", error);
+    }
+  };
 
 
   const deleteForm = async (id) => {

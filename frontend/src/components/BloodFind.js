@@ -66,15 +66,16 @@ const BloodFind = () => {
   
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4 text-red-600">Find Blood Donors</h1>
-      <div className="flex flex-col md:flex-row border-y-4 border-x-2 rounded-3xl p-4 bg-white shadow-md">
-        <div className="input-group mb-4 md:mb-0 md:mr-4">
-          <label className="block mb-2 text-red-600 font-bold">Blood Group:</label>
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-3xl font-extrabold mb-6 text-center bg-gradient-to-r from-red-500 to-pink-500 text-white py-3 rounded-lg">Find Blood Donors</h1>
+
+      <div className="flex flex-col md:flex-row items-end gap-4 p-5 bg-white rounded-2xl shadow-lg border border-gray-100">
+        <div className="flex-1">
+          <label className="block mb-2 text-sm font-semibold text-gray-700">Blood Group</label>
           <select
             value={selectedBloodType}
             onChange={(e) => setSelectedBloodType(e.target.value)}
-            className="border p-2 rounded w-full"
+            className="w-full px-3 py-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-300"
           >
             <option value="">Select Blood Group</option>
             <option value="A+">A+</option>
@@ -88,12 +89,12 @@ const BloodFind = () => {
           </select>
         </div>
 
-        <div className="input-group mb-4 md:mb-0 md:mr-4">
-          <label className="block mb-2 text-red-600 font-bold">Location:</label>
+        <div className="flex-1">
+          <label className="block mb-2 text-sm font-semibold text-gray-700">Location</label>
           <select
             value={selectedAddress}
             onChange={(e) => setSelectedAddress(e.target.value)}
-            className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-red-500 focus:border-red-500 sm:text-sm"
+            className="w-full px-3 py-2 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-300"
           >
             <option value="">Select District</option>
             {districts.map((district, index) => (
@@ -104,37 +105,43 @@ const BloodFind = () => {
           </select>
         </div>
 
-        <button
-          className="search-button border p-2 rounded bg-red-600 text-white w-full md:w-auto hover:bg-red-700 transition-colors"
-          onClick={handleSearch}
-          disabled={loading}
-        >
-          {loading ? "Searching..." : "Search"}
-        </button>
+        <div>
+          <button
+            onClick={handleSearch}
+            disabled={loading}
+            className="px-6 py-2 rounded-full bg-red-600 text-white font-medium shadow hover:bg-red-700 disabled:opacity-60"
+          >
+            {loading ? "Searching..." : "Search"}
+          </button>
+        </div>
       </div>
 
       {error && <p className="text-red-600 mt-4">{error}</p>}
 
-      <div className="results mt-6">
-        <h2 className="text-2xl font-semibold mb-4 text-red-600">Results:</h2>
+      <div className="results mt-8">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-800">Results</h2>
         {results.length > 0 ? (
-          <ul className="list-none space-y-4">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {results.map((result, index) => (
               <li
                 key={index}
-                className="p-4 bg-red-50 border-l-4 border-red-500 rounded shadow"
+                className="p-4 bg-white border rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-1 transition-all"
               >
-                <div className="text-4xl font-extrabold text-red-600 mb-4">
-                  {result.bloodType}
+                <div className="flex items-center space-x-4">
+                  <div className="flex-shrink-0 text-3xl font-extrabold text-red-600">{result.bloodType}</div>
+                  <div>
+                    <div className="text-lg font-semibold text-gray-900">{result.fullname}</div>
+                    <div className="text-sm text-gray-500 mt-1">Age: {result.age} • {result.address}</div>
+                  </div>
                 </div>
-                <div>{result.fullname}</div>
-                <div className="mt-2 text-sm text-gray-600">{result.age}</div>
-                <button
-                  onClick={() => navigate("/contactuser", { state: { user: result } })}
-                  className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700 transition-colors"
-                >
-                  Connect with Donor
-                </button>
+                <div className="mt-4 text-right">
+                  <button
+                    onClick={() => navigate("/contactuser", { state: { user: result } })}
+                    className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700 transition-colors"
+                  >
+                    Connect with Donor
+                  </button>
+                </div>
               </li>
             ))}
           </ul>

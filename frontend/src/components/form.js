@@ -4,9 +4,10 @@ import { setFormData } from "../apis/endpoint";
 
 const Form = () => {
   const [error, setError] = useState("");
-  const navigate = useNavigate('');
-  const user = JSON.parse(localStorage.getItem('user'));
-  const userId = user.id;
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
+  const userId = user && user.id ? user.id : null;
+  const [submitting, setSubmitting] = useState(false);
 
   const [requesterData, setRequesterData] = useState({
     fullname: "", contactnumber: "", email: "", tag: "", bloodType: "", age: "", weight: "", gender: "", address: "", agreeTerms: false,
@@ -49,14 +50,27 @@ const Form = () => {
   e.preventDefault();
   if (!validateForm()) return;
 
+  if (!userId) {
+    setError('You must be logged in to submit a request.');
+    return;
+  }
+
+  setSubmitting(true);
   try {
     const { fullname, contactnumber, email, tag, bloodType, age, weight, gender, address } = requesterData;
-    await setFormData(fullname, contactnumber, email, tag, bloodType, age, weight, gender, address, userId);
-    navigate('/showform');
-    setRequesterData({ fullname: "", contactnumber: "", email: "", tag: "", bloodType: "", age: "", weight: "", gender: "", address: "", agreeTerms: false });
+    const resp = await setFormData(fullname, contactnumber, email, tag, bloodType, age, weight, gender, address, userId);
+    console.log('setFormData response:', resp);
+    if (resp && resp.form) {
+      navigate('/showform');
+      setRequesterData({ fullname: "", contactnumber: "", email: "", tag: "", bloodType: "", age: "", weight: "", gender: "", address: "", agreeTerms: false });
+    } else {
+      setError('Failed to submit request. Server did not return confirmation.');
+    }
   } catch (error) {
     console.error("Error submitting form:", error);
-    setError("Failed to submit request. Please try again.");
+    setError(error && error.message ? `Failed to submit request: ${error.message}` : "Failed to submit request. Please try again.");
+  } finally {
+    setSubmitting(false);
   }
 };
 
@@ -68,7 +82,7 @@ const Form = () => {
           <div>
             <label className="block mb-1">Who Are You?</label>
             <select name="tag" value={requesterData.tag} onChange={(e) => setRequesterData({ ...requesterData, tag: e.target.value })} className="w-full border rounded p-2">
-              <option className="text-gray-200">Donor Or Recipient</option>
+              <option value="" className="text-gray-200">Donor Or Recipient</option>
               <option value="donor">Donor</option>
               <option value="recipient">Recipient</option>
             </select>
@@ -128,7 +142,9 @@ const Form = () => {
             </label>
           </div>
           {error && <p className="text-red-500">{error}</p>}
-          <button type="submit" className="w-full bg-red-600 text-white hover:bg-red-800 hover:text-white p-2 rounded mt-4">Submit</button>
+          <button disabled={submitting} type="submit" className="w-full bg-red-600 text-white hover:bg-red-800 hover:text-white p-2 rounded mt-4">
+            {submitting ? 'Submitting...' : 'Submit'}
+          </button>
         </form>
       </div>
     </div>
