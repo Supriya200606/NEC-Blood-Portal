@@ -8,7 +8,7 @@ const BloodFind = () => {
     const [selectedAddress, setSelectedAddress] = useState("");
     const [results, setResults] = useState([]);
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
 
     const [donorsData,setDonorsData]=useState([{
         fullname:"",

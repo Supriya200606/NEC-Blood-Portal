@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { Eye, EyeOff, ArrowLeftCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../apis/endpoint";
 
 const RegisterPage = () => {
-  const [fullname, setFname] = useState("");
+  const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
@@ -11,91 +12,103 @@ const RegisterPage = () => {
   const [DOB, setDOB] = useState("");
   const [error, setError] = useState("");
   const [response, setResponse] = useState("");
-  const [userData, setUserData] = useState(null);
-  const [showPassword, setShowPassword] = useState(false); // 👈 added for toggle
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
     if (!fullname || !email || !contact || !password || !bloodType || !DOB) {
-      setError("All fields are required.");
+      setError("⚠️ All fields are required.");
       return;
     }
-
     if (!/^\d{10}$/.test(contact)) {
-      setError("Please enter a valid 10-digit contact number.");
-      return false;
+      setError("⚠️ Please enter a valid 10-digit contact number.");
+      return;
     }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setError("Invalid email format.");
+      setError("⚠️ Invalid email format.");
       return;
     }
-
     const strongPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    const hexPwd = /^[a-fA-F0-9]{8,}$/;
-    if (!strongPwd.test(password) && !hexPwd.test(password)) {
+    if (!strongPwd.test(password)) {
       setError(
-        "Password must be at least 8 characters and either include uppercase, lowercase, number and symbol, or be a hex string (0-9, a-f)."
+        "⚠️ Password must include uppercase, lowercase, number and symbol."
       );
       return;
     }
 
     setError("");
+    setIsLoading(true);
 
     try {
       const data = await register(fullname, contact, DOB, bloodType, email, password);
-      console.log(data);
-
       if (data) {
-        setUserData(data);
-        navigate("/login");
-
-        // clear fields only after success
-        setFname("");
-        setContact("");
-        setEmail("");
-        setPassword("");
-        setBloodType("");
-        setDOB("");
-      } else {
-        setResponse("Registration failed.");
+        setResponse("✅ Registration successful!");
+        setTimeout(() => navigate("/login"), 1500);
       }
-    } catch (error) {
-      console.error(error);
-      setResponse(`Registration failed: ${error.message}`);
+    } catch (err) {
+      console.error(err);
+      setResponse("❌ Registration failed. Try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center">
-      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        <form onSubmit={handleRegister} className="space-y-6">
-          <h1 className="text-3xl font-bold text-red-800 border-b-2 border-black pb-2">
-            Registration
-          </h1>
-          <div className="flex space-x-4">
-            <div>
-              <label className="block mb-1">Full Name</label>
-              <input
-                type="text"
-                placeholder="Enter your full name"
-                value={fullname}
-                onChange={(e) => setFname(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-            </div>
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
+      {/* Left section - Form */}
+      <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-10 bg-white shadow-lg relative">
+        {/* Back to Home */}
+        <button
+          onClick={() => navigate("/")}
+          className="absolute top-6 left-6 flex items-center gap-1 bg-white border border-gray-300 px-3 py-2 rounded-full text-teal-600 font-semibold shadow hover:bg-teal-500 hover:text-white transition"
+        >
+          <ArrowLeftCircle size={18} /> Back
+        </button>
+
+        <h1 className="text-4xl font-bold text-teal-700 mb-1">Blood</h1>
+        <p className="text-gray-500 mb-10">Create a New Account</p>
+
+        <form onSubmit={handleRegister} className="w-full max-w-sm space-y-5">
+          {/* Full Name */}
+          <div>
+            <label className="block text-sm font-semibold mb-2 text-gray-700">
+              Full Name
+            </label>
+            <input
+              type="text"
+              value={fullname}
+              onChange={(e) => setFullname(e.target.value)}
+              className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-teal-400 outline-none"
+              placeholder="Enter your full name"
+            />
           </div>
 
+          {/* DOB */}
           <div>
-            <label className="block mb-1">Blood Group</label>
+            <label className="block text-sm font-semibold mb-2 text-gray-700">
+              Date of Birth
+            </label>
+            <input
+              type="date"
+              value={DOB}
+              onChange={(e) => setDOB(e.target.value)}
+              className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-teal-400 outline-none"
+            />
+          </div>
+
+          {/* Blood Group */}
+          <div>
+            <label className="block text-sm font-semibold mb-2 text-gray-700">
+              Blood Group
+            </label>
             <select
               value={bloodType}
               onChange={(e) => setBloodType(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-teal-400 outline-none"
             >
               <option value="">Select your blood group</option>
               <option value="A+">A+</option>
@@ -109,85 +122,117 @@ const RegisterPage = () => {
             </select>
           </div>
 
+          {/* Contact */}
           <div>
-            <label className="block mb-1">DOB</label>
-            <input
-              type="date"
-              value={DOB}
-              onChange={(e) => setDOB(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1">Contact Number</label>
+            <label className="block text-sm font-semibold mb-2 text-gray-700">
+              Contact Number
+            </label>
             <input
               type="text"
-              placeholder="Enter your contact number"
               value={contact}
               onChange={(e) => setContact(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-teal-400 outline-none"
+              placeholder="Enter 10-digit number"
             />
           </div>
 
+          {/* Email */}
           <div>
-            <label className="block mb-1">Email Address</label>
+            <label className="block text-sm font-semibold mb-2 text-gray-700">
+              Email Address
+            </label>
             <input
               type="email"
-              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-teal-400 outline-none"
+              placeholder="Enter your email"
             />
           </div>
 
-          {/* ✅ Password with Show/Hide toggle */}
+          {/* Password */}
           <div>
-            <label className="block mb-1">Password</label>
+            <label className="block text-sm font-semibold mb-2 text-gray-700">
+              Password
+            </label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="Enter your new password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full border border-gray-300 p-3 rounded-md pr-10 focus:ring-2 focus:ring-teal-400 outline-none"
+                placeholder="Create a password"
               />
-              <button
-                type="button"
+              <span
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-2 text-sm text-gray-600 hover:text-gray-800"
+                className="absolute right-3 top-3 cursor-pointer text-gray-600"
               >
-                {showPassword ? "Hide" : "Show"}
-              </button>
+                {showPassword ? <EyeOff /> : <Eye />}
+              </span>
             </div>
           </div>
 
+          {/* Error or Success */}
+          {error && (
+            <p className="bg-red-100 border border-red-300 text-red-700 p-2 rounded text-sm">
+              {error}
+            </p>
+          )}
+          {response && (
+            <p className="bg-green-100 border border-green-300 text-green-700 p-2 rounded text-sm">
+              {response}
+            </p>
+          )}
+
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 bg-red-500 text-white rounded-full font-bold cursor-pointer"
-          >
-            Register
-          </button>
-        </form>
-
-        {response && (
-          <div
-            className={`mt-6 p-4 rounded-md text-sm font-medium ${
-              response.includes("successful")
-                ? "bg-green-100 text-green-700"
-                : "bg-red-100 text-red-700"
+            disabled={isLoading}
+            className={`w-full py-3 rounded-md text-white font-semibold ${
+              isLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-teal-600 hover:bg-teal-700 transition"
             }`}
           >
-            {response}
-          </div>
-        )}
+            {isLoading ? "Registering..." : "Register"}
+          </button>
 
-        <div className="mt-6 text-center">
-          <p className="text-lg">Already have an account?</p>
-          <Link to="/" className="text-blue-500 underline">
-            Login Here
-          </Link>
+          <p className="text-center text-gray-600 mt-3">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-teal-600 font-semibold hover:underline"
+            >
+              Login Here
+            </Link>
+          </p>
+        </form>
+
+        <p className="text-xs text-gray-500 mt-8">
+          © 2025 Hospital Management Service. All rights reserved.
+        </p>
+      </div>
+
+      {/* Right Section - Light Teal Info */}
+      <div className="hidden md:flex w-1/2 bg-[#e6f9f9] flex-col justify-center items-center relative">
+        <div className="bg-white rounded-full shadow-lg w-64 h-64 flex flex-col justify-center items-center text-center border border-teal-100">
+          <h2 className="text-xl font-semibold text-teal-700">HOSPITAL</h2>
+          <p className="text-gray-600 text-sm mt-2">
+            Register & Join Us
+          </p>
+          <div className="mt-5 flex flex-wrap justify-center gap-3 text-teal-500">
+            <span>💉</span>
+            <span>🏥</span>
+            <span>🧑‍⚕️</span>
+            <span>💊</span>
+            <span>🧬</span>
+            <span>🚑</span>
+          </div>
         </div>
+
+        <h1 className="absolute bottom-6 text-5xl font-bold text-teal-500 opacity-10 tracking-wide">
+          REGISTER
+        </h1>
       </div>
     </div>
   );

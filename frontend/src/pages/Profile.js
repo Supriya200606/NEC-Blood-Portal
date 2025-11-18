@@ -3,191 +3,153 @@ import { Link, useNavigate } from "react-router-dom";
 import { getProfile } from "../apis/endpoint";
 import { useAuth } from "../context/AuthContext";
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000';
+const API_BASE = process.env.REACT_APP_API_URL || "http://127.0.0.1:5000";
 
 const Profile = () => {
-  const [profile, setProfile] = useState({
-    fullname: "",
-    email: "",
-    contact: "",
-    bloodType: "",
-    DOB: "",
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const { logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadProfile = async () => {
       try {
-        setLoading(true);
-        setError(null);
-        console.log("Fetching profile data...");
-        const token = localStorage.getItem("token");
-        console.log("Token exists:", !!token);
-        
-        if (!token) {
-          setError("No authentication token found");
-          navigate('/login');
-          return;
-        }
-        
         const res = await getProfile();
-        console.log("Profile response:", res);
-        if (res) {
-          setProfile(res);
-        } else {
-          setError("No profile data received");
-        }
+        setProfile(res);
       } catch (error) {
-        console.error("Error fetching profile:", error);
-        setError(error.message);
-        // If token is invalid, redirect to login
-        if (error.message.includes('Failed to get profile') || error.message.includes('Access denied')) {
-          localStorage.removeItem('token');
-          navigate('/login');
-        }
-      } finally {
-        setLoading(false);
+        console.error(error);
+        logout();
+        navigate("/login");
       }
     };
-    fetchData();
-  }, [navigate]);
+    loadProfile();
+  }, [logout, navigate]);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
+  const handleDelete = async () => {
+    if (!window.confirm("Are you sure you want to permanently delete your account?")) return;
 
-  const confirmDelete = () => {
-    if (window.confirm("Are you sure you want to delete your profile?")) {
-      deleteProfile();
-    }
-  };
-
-  const deleteProfile = async () => {
     const token = localStorage.getItem("token");
     try {
-      // Use API base and profile id to construct delete URL
-      const id = profile._id || profile.id;
-      if (!id) throw new Error('User id not available for delete');
-      const response = await fetch(`${API_BASE}/api/delete/${id}`, {
+      const response = await fetch(`${API_BASE}/api/delete`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-      if (response.ok) handleLogout();
-      else throw new Error("Failed to delete profile");
+
+      if (response.ok) {
+        alert("Account deleted successfully.");
+        logout();
+        navigate("/");
+      } else {
+        alert("Failed to delete profile.");
+      }
     } catch (error) {
-      console.error("Error deleting profile:", error);
+      console.error("Delete error:", error);
     }
   };
 
-  if (loading) {
+  if (!profile)
     return (
-      <div className="min-h-screen flex justify-center items-center bg-slate-200 p-4">
-        <div className="text-center">
-          <div className="text-2xl font-bold text-red-600 mb-4">Loading Profile...</div>
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
-        </div>
+      <div className="min-h-screen flex justify-center items-center bg-slate-200">
+        <p className="text-red-600 text-2xl font-bold">Loading Profile...</p>
       </div>
     );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex justify-center items-center bg-slate-200 p-4">
-        <div className="text-center">
-          <div className="text-2xl font-bold text-red-600 mb-4">Error Loading Profile</div>
-          <div className="text-lg text-gray-700 mb-4">{error}</div>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-slate-200 p-4">
-      <div className="bg-gradient-to-tr from-slate-50 via-grey-200 to-slate-200 w-full md:w-4/5 rounded-3xl shadow-lg p-4 flex flex-col md:flex-row">
+    <div className="min-h-screen flex justify-center items-center bg-slate-200 p-6">
+      <div className="bg-white shadow-xl w-full max-w-4xl rounded-3xl p-8 border border-gray-300">
 
-        {/* Profile Info Section */}
-        <div className="w-full md:w-3/4 pl-0 md:pl-6 mt-6 md:mt-0">
-          <h3 className="text-3xl md:text-4xl font-bold mb-6 text-red-600 font-serif">Profile</h3>
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-lg font-bold text-gray-700">Full Name</label>
-              <p className="mt-1 block w-full border-gray-800 border-b-2 rounded-md shadow-sm p-2">
-                {profile.fullname || "Not provided"}
-              </p>
-            </div>
-            <div>
-              <label className="block text-lg font-bold text-gray-700">Blood Group</label>
-              <p className="mt-1 block w-full border-gray-800 border-b-2 rounded-md shadow-sm p-2">
-                {profile.bloodType || "Not provided"}
-              </p>
-            </div>
-            <div className="col-span-1 md:col-span-2">
-              <label className="block text-lg font-bold text-gray-700">Date Of Birth (DOB)</label>
-              <p className="mt-1 block w-full border-gray-800 border-b-2 rounded-md shadow-sm p-2">
-                {profile.DOB || "Not provided"}
-              </p>
-            </div>
-            <div className="col-span-1 md:col-span-2">
-              <label className="block text-lg font-bold text-gray-700">Mobile Number</label>
-              <p className="mt-1 block w-full border-gray-800 border-b-2 rounded-md shadow-sm p-2">
-                {profile.contact || "Not provided"}
-              </p>
-            </div>
-            <div className="col-span-1 md:col-span-2">
-              <label className="block text-lg font-bold text-gray-700">Email ID</label>
-              <p className="mt-1 block w-full border-gray-800 border-b-2 rounded-md shadow-sm p-2">
-                {profile.email || "Not provided"}
-              </p>
-            </div>
-          </form>
+        <h2 className="text-4xl font-extrabold text-center text-red-700 mb-8">My Profile</h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <div>
+            <label className="font-semibold text-gray-600">Full Name</label>
+            <p className="border-b-2 border-gray-400 py-1 text-gray-900">{profile.fullname}</p>
+          </div>
+
+          <div>
+            <label className="font-semibold text-gray-600">Blood Group</label>
+            <p className="border-b-2 border-gray-400 py-1 text-gray-900">{profile.bloodType}</p>
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="font-semibold text-gray-600">Date of Birth</label>
+            <p className="border-b-2 border-gray-400 py-1 text-gray-900">{profile.DOB}</p>
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="font-semibold text-gray-600">Mobile Number</label>
+            <p className="border-b-2 border-gray-400 py-1 text-gray-900">{profile.contact}</p>
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="font-semibold text-gray-600">Email</label>
+            <p className="border-b-2 border-gray-400 py-1 text-gray-900">{profile.email}</p>
+          </div>
+        </div>
+
+        <div className="mt-8 flex flex-wrap gap-4 justify-center">
+          <Link to="/showform">
+            <button className="bg-red-100 text-red-700 border border-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-red-600 hover:text-white transition">
+              View Submitted Forms
+            </button>
+          </Link>
 
           <button
-            onClick={confirmDelete}
-            className="mt-6 mx-2 md:mx-10 px-6 py-2 rounded-md bg-red-600 text-white hover:bg-red-800"
-          >
-            Delete Profile
-          </button>
-          <button
-            onClick={() => navigate('/upassword')}
-            className="mt-6 mx-2 px-6 py-2 rounded-md bg-red-600 text-white hover:bg-red-800"
+            onClick={() => navigate("/upassword")}
+            className="bg-red-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-800 transition"
           >
             Change Password
           </button>
-        </div>
 
-        {/* Right Side (Show My Forms + Logout) */}
-        <div className="w-full pt-10 md:w-1/4 flex flex-col items-center border-b md:border-b-0 md:border-r border-gray-300 pb-4 md:pb-0 md:pr-4">
-          <div className="text-center">
-            <Link to="/showform">
-              <button className="text-2xl md:text-3xl mb-6 text-red-600 font-bold p-2 border-red-400 rounded-full border-4 cursor-pointer">
-                Show my Forms
-              </button>
-            </Link>
-          </div>
-          <div className="flex-col mt-auto p-4 text-center">
-            <button
-              onClick={handleLogout}
-              className="bg-red-600 text-white hover:bg-red-800 text-lg font-bold p-2 rounded-lg shadow-lg"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
+          <button
+            onClick={handleDelete}
+            className="bg-black text-white px-6 py-2 rounded-lg font-semibold hover:bg-gray-800 transition"
+          >
+            Delete Account
+          </button>
 
+          {/* Logout Now Opens Popup */}
+          <button
+            onClick={() => setShowLogoutPopup(true)}
+            className="bg-gray-400 text-white px-6 py-2 rounded-lg font-semibold hover:bg-gray-600 transition"
+          >
+            Logout
+          </button>
+        </div>
       </div>
+
+      {/* Logout Confirmation Popup */}
+      {showLogoutPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+          <div className="bg-white w-80 p-6 rounded-xl shadow-xl text-center">
+
+            <h2 className="text-xl font-bold text-red-600 mb-4">
+              Are you sure you want to logout?
+            </h2>
+
+            <div className="flex justify-center gap-4 mt-4">
+              <button
+                className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+                onClick={() => setShowLogoutPopup(false)}
+              >
+                Cancel
+              </button>
+
+              <button
+                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                onClick={() => {
+                  logout();
+                  navigate("/login");
+                }}
+              >
+                Logout
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
     </div>
   );
 };

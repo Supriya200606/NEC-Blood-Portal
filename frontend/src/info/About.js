@@ -6,59 +6,64 @@ const About = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-slate-200">
-      <div className="text-black p-4">
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-6"></div>
-        <div>
-          <section className="relative h-[600px] bg-gray flex items-center">
-            <div className="container mx-auto relative z-10 px-6">
-              <div className="max-w-2xl">
-                <h1 className="lg:text-6xl text-4xl px-2 text-slate-700 font-bold">
-                  Every Drop Counts
-                </h1>
-              
-                <p className="text-xl font-sans mb-8">
-                  Your blood donation can save up to three lives. Join our
-                  mission to make a difference in your community.
-                </p>
-                <div className="space-x-4">
-                  <button
-                    onClick={() => navigate("/guide")}
-                    className="bg-red-700 p-2 m-2 text-white shadow-black hover:bg-white hover:text-red-600 font-bold py-3 px-6 rounded-lg shadow-lg"
-                  >
-                    Guide for Donation
-                  </button>
-                  <button
-                    onClick={() => navigate("/ablood")}
-                    size="lg"
-                    variant="outline"
-                    className="p-2 shadow-slate-500 shadow-xl rounded-2xl"
-                  >
-                    Learn More
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
+    <div className="bg-slate-50 min-h-screen">
+      {/* Hero Section */}
+      <section className="flex flex-col justify-center items-center text-center py-20 bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg">
+        <h1 className="text-5xl font-extrabold tracking-wide drop-shadow-lg">
+          Donate Blood, Save Lives
+        </h1>
+        <p className="mt-4 text-lg max-w-2xl leading-relaxed text-red-100">
+          Every drop of blood you donate can bring hope to someone in need.
+          Your contribution can save up to <span className="font-bold">three lives</span>.
+        </p>
+
+        <div className="mt-8 flex gap-4">
+          <button
+            onClick={() => navigate("/guide")}
+            className="bg-white text-red-600 font-bold py-3 px-6 rounded-lg shadow-md hover:bg-red-100 transition-all"
+          >
+            Guide for Donation
+          </button>
+
+          <button
+            onClick={() => navigate("/ablood")}
+            className="border border-white text-white font-bold py-3 px-6 rounded-lg hover:bg-white hover:text-red-700 transition-all"
+          >
+            Learn More
+          </button>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <div className="max-w-6xl mx-auto px-6 py-16 flex flex-col lg:flex-row items-center gap-12">
+        <div className="flex-1">
+          <h2 className="text-4xl font-extrabold text-red-700 mb-6 text-center lg:text-left">
+            About the Portal
+          </h2>
+
+          <p className="text-gray-700 text-lg leading-relaxed mb-4 text-center lg:text-left">
+            The <b>NEC Blood Donation Portal</b> is an initiative by
+            <b> Nandha Engineering College</b> in collaboration with 
+            <b> Nandha Medical Hospital</b>, Erode. Our goal is to connect voluntary blood donors
+            with patients in urgent need — quickly and efficiently.
+          </p>
+
+          <p className="text-gray-700 text-lg leading-relaxed text-center lg:text-left">
+            We believe in enhancing societal responsibility through compassion,
+            awareness, and technology. By joining our community, you're taking
+            part in a life-saving mission.
+          </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center">
-          <div className="m-10 flex-1 items-center mb-10 lg:text-6xl text-4xl px-2 text-[#fc2323] mt-16 font-extrabold text-center">
-            About Us
-            <p className="lg:text-2xl text-xl text-black font-bold m-10 text-center">
-              Welcome to the NEC Blood Donation Portal, a collaborative
-              initiative by Nandha Engineering College (NEC) and Nandha Medical
-              Hospital, Erode. Our mission is to save lives through awareness,
-              technology, and compassion by connecting voluntary donors with
-              those in need — right from our own campus. At NEC, we believe that
-              education goes beyond academics — it’s about creating responsible
-              citizens who give back to society. With the support of Nandha
-              Medical Hospital’s healthcare team, the NEC Blood Donation Portal
-              serves as a bridge between donors, hospitals, and patients
-              requiring urgent blood transfusions.
-            </p>
+        <div className="flex-1 flex justify-center">
+          <div className="relative">
+            <div className="absolute -top-4 -left-4 bg-red-300 w-20 h-20 rounded-full blur-2xl opacity-50"></div>
+            <img
+              src={logo}
+              alt="NEC Blood Portal"
+              className="w-72 h-72 object-cover rounded-full shadow-lg border-4 border-red-700 relative z-10"
+            />
           </div>
-          <img src={logo} alt="logo" className="h-1/2 rounded-full" />
         </div>
       </div>
     </div>

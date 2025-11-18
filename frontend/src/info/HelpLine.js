@@ -1,7 +1,7 @@
 import React from "react";
+import { Phone, AlertTriangle, HelpCircle } from "lucide-react";
 
 const HelpLine = () => {
-  // Update these contact numbers to the real NEC Medical Hospital / Nandha Engineering College contacts
   const contacts = [
     { name: "Nandha Medical Hospital - Emergency", number: "07373711224" },
     { name: "Nandha Medical Hospital - General Line", number: "04294-222222" },
@@ -10,94 +10,90 @@ const HelpLine = () => {
     { name: "Ambulance / Patient Transport", number: "919750770555" },
   ];
 
-
   const faqs = [
     {
       question: "Who is eligible to donate blood through NEC Blood Portal?",
       answer:
-        "Healthy adults aged 18-65 who meet the medical screening criteria (weight above 50kg, good health, and no recent illnesses) are eligible. The Nandha Medical Hospital team performs health screening before donation.",
+        "Healthy adults aged 18-65 with weight above 50kg and no recent illness. Medical screening is done at Nandha Medical Hospital.",
     },
     {
       question: "What precautions should I take before donating blood?",
       answer:
-        "Eat a balanced meal, drink plenty of fluids, get adequate rest, and avoid alcohol for 24 hours prior. Bring a valid ID and ensure you haven't taken any medications that might affect donation eligibility.",
+        "Have a proper meal, drink water, rest well, avoid alcohol for 24 hours and carry a valid ID.",
     },
     {
-      question: "How do I find blood donors through NEC Blood Portal?",
+      question: "How do I find blood donors through this portal?",
       answer:
-        "Use the blood search feature in the portal to find donors by blood type and location. You can contact donors directly through the provided contact options - email or WhatsApp messaging.",
+        "Use the search page to find donors by blood type. You can contact them directly.",
     },
     {
       question: "What should I do if I feel unwell after donating?",
       answer:
-        "Contact the Nandha Medical Hospital emergency line immediately or visit the nearest medical facility. Keep the donor information card provided after donation for reference.",
+        "Contact the hospital emergency service immediately or visit your nearest medical center.",
     },
     {
       question: "How often can I donate blood?",
       answer:
-        "Follow medical guidelines: whole blood donations are typically allowed once every 56 days (8 weeks). Always consult with medical professionals before your next donation.",
+        "Every 56 days for whole blood donation. Always follow doctor advice.",
     },
     {
-      question: "How do I register as a blood donor on NEC Blood Portal?",
+      question: "How do I become a registered donor?",
       answer:
-        "Create an account using your email, fill out the donor registration form with your blood type and contact details. Ensure all information is accurate for emergency blood requests.",
+        "Create an account and submit your donor information accurately.",
     },
   ];
 
-  return(
-  
-    <div className="bg-slate-200 text-black text-xl ">
-      
-      <div>
-        <div className="p-6 min-h-screen">
-          <h1 className=" text-center lg:text-5xl text-slate-700 font-bold">
-            Nandha Medical Hospital — Helpline (Nandha Engineering College)
-          </h1>
+  return (
+    <div className="min-h-screen bg-slate-100 py-10 px-5">
+      <div className="max-w-5xl mx-auto">
 
-          <div className=" shadow-lg rounded-md p-6 mb-6">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">
-              Quick Contacts
-            </h2>
-            <ul className="space-y-4">
-              {contacts.map((contact, index) => (
-                <li
-                  key={index}
-                  className="flex justify-between items-center border-b pb-2"
+        {/* Page Title */}
+        <h1 className="text-center text-red-700 text-4xl md:text-5xl font-extrabold mb-10">
+          Nandha Medical Hospital Helpline
+        </h1>
+
+        {/* Contact Section */}
+        <div className="bg-white shadow-lg rounded-xl p-6 mb-10 border border-red-200">
+          <h2 className="text-2xl font-bold text-red-700 mb-5 flex items-center gap-2">
+            <AlertTriangle size={28} /> Emergency Contact Numbers
+          </h2>
+
+          <ul className="divide-y">
+            {contacts.map((item, index) => (
+              <li key={index} className="flex justify-between items-center py-3 text-lg">
+                <span className="font-medium text-gray-700">{item.name}</span>
+
+                {/* Clickable phone link */}
+                <a
+                  href={`tel:${item.number}`}
+                  className="flex items-center gap-2 text-red-700 hover:text-red-900 font-semibold"
                 >
-                  <span className="text-gray-600 font-medium">
-                    {contact.name}
-                  </span>
-                  
-                  <span>
-                    {contact.number}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+                  <Phone size={18} /> {item.number}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-          <div className="  rounded-md p-6 mb-6">
-            <h2 className="text-2xl font-bold text-red-600 font-serif mb-4">
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-4 font-bold text-md">
-              {faqs.map((faq, index) => (
-                <div key={index}>
-                    <span>Q.{faq.question}</span>
-                    <div>A.{faq.answer}</div>
-                 
-                 
-                </div>
-              ))}
-            </div>
+        {/* FAQ Section */}
+        <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-200">
+          <h2 className="text-2xl font-bold text-red-700 mb-5 flex items-center gap-2">
+            <HelpCircle size={28} /> Frequently Asked Questions
+          </h2>
+
+          <div className="space-y-6">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-red-50 border border-red-200 p-4 rounded-lg">
+                <p className="font-semibold text-red-700">Q. {faq.question}</p>
+                <p className="text-gray-700 mt-1">A. {faq.answer}</p>
+              </div>
+            ))}
           </div>
         </div>
+
       </div>
     </div>
-  
- 
-
   );
-
 };
+
 export default HelpLine;

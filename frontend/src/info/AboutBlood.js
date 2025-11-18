@@ -1,113 +1,74 @@
 const AboutBlood = () => {
   return (
-    <div className="text-lg bg-slate-200 text-black">
-      <div className="flex justify-center items-center">
-        <div className="w-full m-8 rounded-lg shadow-md overflow-hidden">
-          <div className="text-[#d21d1d] text-4xl md:text-6xl font-bold py-10 text-center p-4">
-            Donation Knowledge
-          </div>
-          <div className="bg-red-600 text-white text-center py-4 font-bold text-lg md:text-xl">
-            Compatible Blood Type Donors
-          </div>
-          <table className="w-full border-collapse border border-gray-300">
-            <thead className="bg-red-200">
-              <tr>
-                <th className="border border-gray-300 px-2 md:px-4 py-2 text-left">
-                  Blood Type
-                </th>
-                <th className="border border-gray-300 px-2 md:px-4 py-2 text-left">
-                  Donate Blood To
-                </th>
-                <th className="border border-gray-300 px-2 md:px-4 py-2 text-left">
-                  Receive Blood From
-                </th>
+    <div className="bg-slate-50 min-h-screen py-10">
+      {/* Header */}
+      <h1 className="text-center text-5xl font-extrabold text-red-700 mb-10">
+        Donation Knowledge
+      </h1>
+
+      {/* Table Section */}
+      <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
+        <div className="bg-red-600 text-white text-center py-4 text-2xl font-bold">
+          Compatible Blood Type Donors
+        </div>
+
+        <table className="w-full text-lg">
+          <thead className="bg-red-100 text-red-700 font-semibold">
+            <tr>
+              <th className="py-3 px-4 border-b">Blood Type</th>
+              <th className="py-3 px-4 border-b">Donate Blood To</th>
+              <th className="py-3 px-4 border-b">Receive Blood From</th>
+            </tr>
+          </thead>
+
+          <tbody className="text-gray-700">
+            {[
+              ["A+", "A+, AB+", "A+, A-, O+, O-"],
+              ["O+", "O+, A+, B+, AB+", "O+, O-"],
+              ["B+", "B+, AB+", "B+, B-, O+, O-"],
+              ["AB+", "AB+", "Everyone"],
+              ["A-", "A+, A-, AB+, AB-", "A-, O-"],
+              ["O-", "Everyone", "O-"],
+              ["B-", "B+, B-, AB+, AB-", "B-, O-"],
+              ["AB-", "AB+, AB-", "AB-, A-, B-, O-"],
+            ].map((row, index) => (
+              <tr
+                key={index}
+                className="hover:bg-red-50 transition-all text-center"
+              >
+                <td className="py-3 px-4 font-bold text-red-600">{row[0]}</td>
+                <td className="py-3 px-4">{row[1]}</td>
+                <td className="py-3 px-4">{row[2]}</td>
               </tr>
-            </thead>
-            <tbody>
-              <tr className="hover:bg-red-100">
-                <td className="border border-gray-300 px-2 md:px-4 py-2 text-red-600 font-bold">
-                  A+
-                </td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">A+, AB+</td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">
-                  A+, A-, O+, O-
-                </td>
-              </tr>
-              <tr className="hover:bg-red-100">
-                <td className="border border-gray-300 px-2 md:px-4 py-2 text-red-600 font-bold">
-                  O+
-                </td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">
-                  O+, A+, B+, AB+
-                </td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">O+, O-</td>
-              </tr>
-              <tr className="hover:bg-red-100">
-                <td className="border border-gray-300 px-2 md:px-4 py-2 text-red-600 font-bold">
-                  B+
-                </td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">B+, AB+</td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">
-                  B+, B-, O+, O-
-                </td>
-              </tr>
-              <tr className="hover:bg-red-100">
-                <td className="border border-gray-300 px-2 md:px-4 py-2 text-red-600 font-bold">
-                  AB+
-                </td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">AB+</td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">Everyone</td>
-              </tr>
-              <tr className="hover:bg-red-100">
-                <td className="border border-gray-300 px-2 md:px-4 py-2 text-red-600 font-bold">
-                  A-
-                </td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">
-                  A+, A-, AB+, AB-
-                </td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">A-, O-</td>
-              </tr>
-              <tr className="hover:bg-red-100">
-                <td className="border border-gray-300 px-2 md:px-4 py-2 text-red-600 font-bold">
-                  O-
-                </td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">Everyone</td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">O-</td>
-              </tr>
-              <tr className="hover:bg-red-100">
-                <td className="border border-gray-300 px-2 md:px-4 py-2 text-red-600 font-bold">
-                  B-
-                </td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">
-                  B+, B-, AB+, AB-
-                </td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">B-, O-</td>
-              </tr>
-              <tr className="hover:bg-red-100">
-                <td className="border border-gray-300 px-2 md:px-4 py-2 text-red-600 font-bold">
-                  AB-
-                </td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">AB+, AB-</td>
-                <td className="border border-gray-300 px-2 md:px-4 py-2">
-                  AB-, A-, B-, O-
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div>
-            <h2 className="text-2xl md:text-4xl p-8 mt-10 text-red-700 font-extrabold text-center">
-              Benefits of Blood Donation
-            </h2>
-            <div className="text-lg md:text-2xl grid grid-cols-1 gap-10 text-bold justify-items-center">
-              <li>Saving lives of patients in need of blood transfusions</li>
-              <li>Helping to maintain iron content in the blood</li>
-              <li>Reducing the risk of heart attacks</li>
-              <li>Providing a sense of fulfillment and social responsibility</li>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Benefits Section */}
+      <div className="max-w-6xl mx-auto mt-16">
+        <h2 className="text-center text-4xl font-extrabold text-red-700 mb-8">
+          Benefits of Blood Donation
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-6 px-6">
+          {[
+            "Saves lives of patients in need.",
+            "Helps control and balance iron levels in the body.",
+            "Reduces the risk of heart-related diseases.",
+            "Promotes mental satisfaction & social responsibility.",
+          ].map((benefit, index) => (
+            <div
+              key={index}
+              className="bg-white shadow-md rounded-xl p-6 border-l-8 border-red-600 text-gray-800 text-lg font-medium hover:shadow-xl transition-all"
+            >
+              {benefit}
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
   );
 };
+
 export default AboutBlood;

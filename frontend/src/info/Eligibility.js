@@ -1,75 +1,95 @@
 const Eligibility = () => {
   return (
-    <div className="bg-slate-200 text-black flex-1">
-      <div className="p-5 md:p-20">
-        <div className="items-start text-lg md:text-xl bg-white rounded-2xl font-serif p-5 md:p-10">
-          <h1 className="text-2xl md:text-4xl text-red-600 font-bold">
-            Who can donate Blood?
-          </h1>
+    <div className="bg-slate-50 min-h-screen py-12 text-gray-800">
+      
+      {/* Who Can Donate Section */}
+      <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-2xl p-8 md:p-12 mb-16">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-red-600 mb-6 text-center">
+          Who Can Donate Blood?
+        </h1>
+
+        <p className="text-lg md:text-xl text-center mb-10 text-gray-600">
+          Blood donation is a noble act that can save multiple lives. However, donors must meet safe health conditions.
+        </p>
+
+        <div className="space-y-8 text-lg">
+          <div>
+            <h2 className="font-bold text-red-600 text-2xl mb-2">General Health Requirements</h2>
+            <ul className="list-disc ml-6 text-gray-700 leading-relaxed">
+              <li>The donor must be in good general health.</li>
+              <li>Minimum weight should be **50 kg**.</li>
+            </ul>
+          </div>
 
           <div>
-            <h1 className="mt-5 md:mt-10 font-bold">General Health Requirements</h1>
-            <p className="text-sm md:text-base">
-              Must be generally healthy without any acute or chronic illnesses.
-              Must have a minimum weight of 50 kg (110 lbs) for most adult donors.
-            </p>
-            <h1 className="mt-5 md:mt-10 font-bold">Age requirement:</h1>
-            <p className="text-sm md:text-base">
-              Typically 17–65 years, but this can vary based on local regulations.
+            <h2 className="font-bold text-red-600 text-2xl mb-2">Age Requirement</h2>
+            <p>Eligible age range: **17 to 65 years**.</p>
+          </div>
+
+          <div>
+            <h2 className="font-bold text-red-600 text-2xl mb-2">Blood Requirements</h2>
+            <p>Normal hemoglobin levels are required:</p>
+            <ul className="list-disc ml-6 text-gray-700 leading-relaxed">
+              <li>Women: **12.5 g/dL and above**</li>
+              <li>Men: **13.5 g/dL and above**</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="font-bold text-red-600 text-2xl mb-2">Donation Interval</h2>
+            <p>
+              Minimum **56 days (8 weeks)** gap is required between whole blood donations.
             </p>
           </div>
+
           <div>
-            <h1 className="mt-5 md:mt-10 font-bold">Blood Donation Requirements:</h1>
-            <p className="text-sm md:text-base">
-              Must have normal hemoglobin levels (usually above 12.5 g/dL for women and 13.5 g/dL for men).
-            </p>
-            <h1 className="mt-5 md:mt-10 font-bold">Interval:</h1>
-            <p className="text-sm md:text-base">
-              Must wait at least 56 days (8 weeks) between donations for whole blood. Physical and Medical Conditions:
-            </p>
-          </div>
-          <div>
-            <p className="text-sm md:text-base">
-              People with tattoos and piercings can donate if they are healed and not within the last few months.
+            <h2 className="font-bold text-red-600 text-2xl mb-2">Tattoos & Piercings</h2>
+            <p>
+              People with tattoos/piercings can donate **if done more than 6 months ago** and healed properly.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="p-5 md:p-20">
-        <div className="items-start text-lg md:text-xl p-5 md:p-20 rounded-2xl bg-red-500 font-serif">
-          <h1 className="text-2xl md:text-4xl text-white font-bold">
-            Who cannot donate blood?
-          </h1>
+      {/* Who Cannot Donate Section */}
+      <div className="max-w-5xl mx-auto bg-red-600 text-white shadow-lg rounded-2xl p-8 md:p-12">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-6">
+          Who Cannot Donate Blood?
+        </h1>
+
+        <p className="text-lg md:text-xl text-center mb-10 text-red-100">
+          Certain health conditions prevent safe donation to protect both donor and recipient.
+        </p>
+
+        <div className="space-y-8 text-lg text-red-50 leading-relaxed">
           <div>
-            <h1 className="mt-5 md:mt-10 font-bold">Health Conditions and Diseases:</h1>
-            <p className="text-sm md:text-base">
-              Blood Transfusion Recipients: Those who have recently received a blood transfusion should wait until doctor consultation. Others who suffer from blood-related diseases cannot give blood.
+            <h2 className="font-bold text-white text-2xl mb-2">Health Conditions</h2>
+            <ul className="list-disc ml-6">
+              <li>Recent blood transfusions.</li>
+              <li>Severe heart diseases or history of stroke.</li>
+              <li>Chronic blood disorders (e.g., hemophilia, sickle cell).</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="font-bold text-white text-2xl mb-2">Infectious Diseases</h2>
+            <p>
+              People with **malaria, hepatitis, HIV, severe infections, fever, cold, or flu** should not donate until fully recovered.
             </p>
-            <div>
-              <h1 className="mt-5 md:mt-10 font-bold">Heart Disease:</h1>
-              <p className="text-sm md:text-base">
-                People with a history of heart disease, including heart attack or stroke. Malaria: Recent history of malaria or travel to malaria-endemic regions without adequate treatment.
-              </p>
-              <h1 className="mt-5 md:mt-10 font-bold">Chronic Illnesses</h1>
-              <p className="text-sm md:text-base">
-                Conditions like sickle cell disease, hemophilia, or other blood disorders.
-              </p>
-              <h1 className="mt-5 md:mt-10 font-bold">Infectious Diseases</h1>
-              <p className="text-sm md:text-base">
-                People with active infections, including cold, flu, or other contagious conditions, should avoid donating until fully recovered.
-              </p>
-            </div>
-            <div>
-              <h1 className="mt-5 md:mt-10 font-bold">Lifestyle and High-Risk Behaviors:</h1>
-              <p className="text-sm md:text-base">
-                Drug Use: People who use intravenous drugs or have a history of drug abuse may be disqualified. High-risk sexual activity, such as unprotected sex with multiple partners, may disqualify you.
-              </p>
-            </div>
+          </div>
+
+          <div>
+            <h2 className="font-bold text-white text-2xl mb-2">Lifestyle Restrictions</h2>
+            <ul className="list-disc ml-6">
+              <li>People with recent intravenous drug use.</li>
+              <li>High-risk unprotected sexual activity may disqualify you.</li>
+            </ul>
           </div>
         </div>
       </div>
+
     </div>
   );
 };
+
 export default Eligibility;

@@ -1,57 +1,66 @@
-import React,{useState,useEffect} from 'react';
-import { showBloodRequestData } from '../apis/endpoint';
+import React, { useState, useEffect } from "react";
+import { showBloodRequestData } from "../apis/endpoint";
 import { useNavigate } from "react-router-dom";
 
 const BRepo = () => {
-    const navigate= useNavigate();
+  const navigate = useNavigate();
+  const [donorsData, setDonorsData] = useState([]);
 
-  const[donorsData,setDonorsData]=useState([]);
-  useEffect(()=>{
-    const getDonors = async()=>{
-      const res = await showBloodRequestData('donor');
+  useEffect(() => {
+    const getDonors = async () => {
+      const res = await showBloodRequestData("donor");
       setDonorsData(Array.isArray(res) ? res : []);
-    }
+    };
     getDonors();
-  },[]);
-
-
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <p className="text-2xl font-bold text-gray-900 text-center  p-4 rounded-lg shadow-md">
-      Here you can find people who are willing to donate blood.
-      
+    <div className="min-h-screen bg-slate-100 p-6">
+      <h1 className="text-4xl font-bold text-center text-red-700 mb-2">
+        Blood Donor Repository
+      </h1>
+      <p className="text-center text-gray-600 mb-10">
+        A network of voluntary donors ready to help save lives.
       </p>
-      <p className='text-center font-semibold mb-8 '>Save people valuable lives.</p>
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
-      <div className='justify-items-center'>
-      <h1 className="text-3xl font-bold shadow-md text-center border-black shadow-black w-1/3 rounded-2xl border-b-2 text-red-600 mb-8">
-          Blood Donors
-        </h1>
-        </div>
-        <div className="mt-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {donorsData.map((donor, index) => (
-              <div
-                key={index}
-                className="bg-red-50 border-2 border-red-300 rounded-lg p-6 flex flex-col items-center shadow-md hover:shadow-lg transition-shadow duration-300"
-              >
-                <div className="text-4xl font-extrabold text-red-600 mb-4">
+
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {donorsData.length > 0 ? (
+          donorsData.map((donor, index) => (
+            <div
+              key={index}
+              className="bg-white p-6 rounded-xl border-t-4 border-red-600 shadow hover:shadow-xl hover:-translate-y-1 transition"
+            >
+              <div className="text-center">
+                <h2 className="text-4xl font-extrabold text-red-700 mb-2">
                   {donor.bloodType}
-                </div>
-                <div>
+                </h2>
+                <h3 className="text-lg font-semibold text-gray-800">
                   {donor.fullname}
-                </div>
-                <button
-                  onClick={() => navigate("/contactuser", { state: { user: donor } })}
-                  className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700 transition-colors"
-                >
-                  Connect with Donor
-                </button>
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  {donor.gender}, {donor.age} yrs
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
+
+              <div className="mt-4 text-sm text-gray-700 space-y-1">
+                <p>📍 <span className="font-medium">{donor.address}</span></p>
+                <p>☎️ {donor.contactnumber || "Not provided"}</p>
+                <p>✉️ {donor.email}</p>
+              </div>
+
+              <button
+                onClick={() => navigate("/contactuser", { state: { user: donor } })}
+                className="mt-5 w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition"
+              >
+                Contact Donor
+              </button>
+            </div>
+          ))
+        ) : (
+          <p className="text-center col-span-3 text-gray-600 text-lg">
+            No donors available currently.
+          </p>
+        )}
       </div>
     </div>
   );
