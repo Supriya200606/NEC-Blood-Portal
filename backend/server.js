@@ -100,15 +100,23 @@ app.post("/api/register", async (req, res) => {
 });
 
 // Login User
+// Login User
 app.post("/api/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ error: "User not found" });
+    if (!user) return res.status(400).json({ error: "Invalid Email or Password" });
+
+    // 🔥 If DB contains non-hashed password, fix it automatically
+    if (!user.password.startsWith("$2")) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(user.password, salt);
+      await user.save();
+    }
 
     const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) return res.status(400).json({ error: "Invalid password" });
+    if (!validPassword) return res.status(400).json({ error: "Invalid Email or Password" });
 
     const token = jwt.sign(
       { id: user._id, email: user.email },
@@ -128,9 +136,11 @@ app.post("/api/login", async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: "Server error during login" });
   }
 });
+
+
 
 // Delete User
 app.delete("/api/delete", authenticateToken, async (req, res) => {
@@ -222,7 +232,9 @@ app.post("/api/forgot-password", async (req, res) => {
     if (!user) return res.status(404).json({ error: "User not found" });
 
     const token = crypto.randomBytes(32).toString("hex");
-const resetLink = `http://localhost:3000/forgot-password?token=${token}`;
+
+    // FIXED URL 👇
+const resetLink = `${process.env.FRONTEND_URL}/upassword?token=${token}`;
 
     resetTokens.set(token, { userId: user._id, expires: Date.now() + 15 * 60 * 1000 });
 
@@ -234,70 +246,58 @@ const resetLink = `http://localhost:3000/forgot-password?token=${token}`;
       },
     });
 
-    console.log("📧 Preparing to send mail...");
-    console.log("EMAIL_USER:", process.env.EMAIL_USER);
-    console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
-
-    try {
-      await transporter.verify();
-      console.log("✅ SMTP connection successful!");
-    } catch (verifyError) {
-      console.error("❌ SMTP connection failed:", verifyError);
-      return res.status(500).json({ error: "Failed to connect to Gmail SMTP. Check credentials." });
-    }
-
-    const mailOptions = {
+    await transporter.sendMail({
       from: `"NEC Blood Portal" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Reset Your Password - NEC Blood Portal",
       html: `
-        <div style="font-family: Arial, sans-serif; border:1px solid #ddd; padding:20px; border-radius:10px;">
+        <div style="font-family: Arial, sans-serif; padding:20px;">
           <h2 style="color:#b91c1c;">Password Reset Request</h2>
-          <p>Hello <b>${user.fullname}</b>,</p>
-          <p>You requested to reset your password. Click the button below:</p>
+          <p>Hello <b>${user.fullname}</b>, Click below to set a new password:</p>
           <a href="${resetLink}" 
-            style="display:inline-block; background-color:#b91c1c; color:#fff; padding:10px 16px; border-radius:6px; text-decoration:none;">
+            style="background:#b91c1c;color:white;padding:10px 18px;text-decoration:none;border-radius:6px;">
             Reset Password
           </a>
-          <p>This link will expire in 15 minutes.</p>
+          <p>This link expires in 15 minutes.</p>
         </div>
       `,
-    };
-
-    await transporter.sendMail(mailOptions);
-    console.log("✅ Reset email sent successfully to:", email);
+    });
 
     res.json({ message: "Password reset link sent to your email." });
+
   } catch (error) {
-    console.error("❌ Forgot password error:", error);
+    console.error(error);
     res.status(500).json({ error: "Failed to send reset email." });
   }
 });
 
+
 app.post("/api/reset-password/:token", async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
-  console.log("🔑 Password reset attempt for token:", token);
+
+  const tokenData = resetTokens.get(token);
+  if (!tokenData || Date.now() > tokenData.expires) {
+    resetTokens.delete(token);
+    return res.status(400).json({ error: "Invalid or expired reset link" });
+  }
 
   try {
-    const tokenData = resetTokens.get(token);
-    if (!tokenData || Date.now() > tokenData.expires) {
-      resetTokens.delete(token);
-      return res.status(400).json({ error: "Invalid or expired reset link" });
-    }
-
     const user = await User.findById(tokenData.userId);
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    user.password = await bcrypt.hash(password, 10);
-    await user.save();
+    // 🔥 HASH NEW PASSWORD PROPERLY
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    await User.findByIdAndUpdate(user._id, { password: hashedPassword });
 
     resetTokens.delete(token);
-    console.log("✅ Password successfully updated for user:", user.email);
 
     res.json({ message: "Password updated successfully" });
-  } catch (error) {
-    console.error("❌ Reset password error:", error);
+
+  } catch (err) {
+    console.error("❌ Reset Password Error:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -305,39 +305,30 @@ app.post("/api/reset-password/:token", async (req, res) => {
 // ================== ADMIN ROUTES ==================
 // ================== UPDATE PASSWORD (logged-in user) ==================
 // ================== UPDATE PASSWORD (Logged-In User) ==================
-app.put("/api/update-password", authenticateToken, async (req, res) => {
+app.post("/api/reset-password/:token", async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  const tokenData = resetTokens.get(token);
+  if (!tokenData || Date.now() > tokenData.expires) {
+    resetTokens.delete(token);
+    return res.status(400).json({ error: "Invalid or expired reset link" });
+  }
+
   try {
-    const { password } = req.body;
+    const user = await User.findById(tokenData.userId);
+    if (!user) return res.status(404).json({ error: "User not found" });
 
-    if (!password || password.trim() === "") {
-      return res.status(400).json({ error: "Password is required" });
-    }
+    // ⬇ IMPORTANT: HASH PASSWORD
+    const hashed = await bcrypt.hash(password, 10);
 
-    // ✅ Strong password validation (Optional, you can remove if not needed)
-    const strongPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    if (!strongPwd.test(password)) {
-      return res.status(400).json({
-        error: "Password must be minimum 8 chars & contain upper, lower, number, symbol",
-      });
-    }
+    await User.findByIdAndUpdate(user._id, { password: hashed });
 
-    // ✅ Hash new password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    resetTokens.delete(token);
 
-    // ✅ Update password directly in DB
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user.id,
-      { password: hashedPassword },
-      { new: true }
-    );
+    res.json({ message: "Password updated successfully" });
 
-    if (!updatedUser) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    res.json({ message: "✅ Password updated successfully!" });
   } catch (err) {
-    console.error("Update password error:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });

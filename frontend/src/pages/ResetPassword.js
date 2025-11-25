@@ -1,86 +1,85 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-const ResetPassword = () => {
-  const navigate = useNavigate();
-  const token = new URLSearchParams(window.location.search).get("token");
-
+export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const token = searchParams.get("token");
+  if (!token) return <p className="text-center p-10 text-red-600">❌ Invalid or missing token</p>;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!password || !confirm) return setError("All fields are required");
-    if (password !== confirm) return setError("Passwords do not match");
-
-    setError("");
-    setLoading(true);
+    if (password !== confirm) {
+      setMessage("⚠️ Passwords do not match");
+      return;
+    }
 
     try {
-      const API = process.env.REACT_APP_API_URL || "http://127.0.0.1:5000";
-      const res = await fetch(`${API}/api/reset-password`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL || "http://127.0.0.1:5000"}/api/reset-password/${token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, password }),
+        credentials: "include",
+        body: JSON.stringify({ password }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        setMessage("✅ Password updated successfully! Redirecting to login...");
-        setTimeout(() => navigate("/login"), 2000);
+        setMessage("✅ Password reset successfully! Redirecting...");
+        setTimeout(() => navigate("/login"), 1500);
       } else {
-        setError(data.error);
+        setMessage(data.error || "❌ Something went wrong");
       }
-
-    } catch {
-      setError("Network error. Try again.");
+    } catch (err) {
+      setMessage("❌ Network error. Try again.");
     }
-
-    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100 px-4">
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-red-100 via-white to-red-200 px-4">
+      <form onSubmit={handleSubmit} className="bg-white p-8 shadow-xl rounded-2xl w-full max-w-md">
 
-      <div className="bg-white shadow-xl rounded-xl p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center text-red-600 mb-5">Reset Password</h1>
+        <h2 className="text-2xl font-bold text-center text-red-600 mb-4">
+          Reset Your Password
+        </h2>
 
-        {error && <p className="bg-red-100 text-red-600 p-2 rounded mb-3 text-center">{error}</p>}
-        {message && <p className="bg-green-100 text-green-700 p-2 rounded mb-3 text-center">{message}</p>}
+        {message && <p className="text-center mb-4 text-red-500">{message}</p>}
 
-        <form onSubmit={handleSubmit}>
-          <label className="block font-semibold">New Password</label>
-          <input
-            type="password"
-            className="border w-full p-2 rounded mb-4"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <input
+          type="password"
+          placeholder="New Password"
+          className="w-full border p-3 rounded-lg mb-3 focus:ring-2 focus:ring-red-400"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-          <label className="block font-semibold">Confirm Password</label>
-          <input
-            type="password"
-            className="border w-full p-2 rounded mb-4"
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-          />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          className="w-full border p-3 rounded-lg mb-4 focus:ring-2 focus:ring-red-400"
+          value={confirm}
+          onChange={(e) => setConfirm(e.target.value)}
+          required
+        />
 
-          <button
-            className="bg-red-600 text-white w-full py-2 rounded hover:bg-red-700"
-            disabled={loading}
-          >
-            {loading ? "Updating..." : "Reset Password"}
-          </button>
-        </form>
-      </div>
+        <button className="bg-red-600 w-full text-white py-3 rounded-lg hover:bg-red-700 transition">
+          Reset Password
+        </button>
 
+        <button
+          type="button"
+          onClick={() => navigate("/login")}
+          className="w-full text-center mt-3 text-red-700 hover:underline"
+        >
+          Back to Login
+        </button>
+      </form>
     </div>
   );
-};
-
-export default ResetPassword;
+}

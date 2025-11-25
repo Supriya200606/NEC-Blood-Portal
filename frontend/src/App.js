@@ -60,6 +60,7 @@ const App = () => {
           {/* ✅ Forgot & Reset Password Pages */}
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+<Route path="/upassword" element={<UpdatePW />} />
 
           {/* Layout Wrapper */}
           <Route path="/" element={<Layout />}>
