@@ -43,7 +43,7 @@ const Navbar = () => {
             className="text-2xl md:text-3xl font-bold cursor-pointer tracking-wide"
             onClick={() => navigate("/home")}
           >
-            NEC Blood Portal
+            Kongu Blood Portal
           </h1>
         </div>
 

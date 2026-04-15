@@ -48,7 +48,7 @@ const Home = () => {
       {/* About Section */}
       <div className="bg-gradient-to-r from-red-700 to-red-900 py-12 px-4 mt-10 md:px-8">
         <h2 className="text-4xl font-extrabold text-center text-slate-300 mb-8">
-          Why Was NEC Blood Portal Developed?
+          Why Was Kongu Blood Portal Developed?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
           <div className="bg-white shadow-md p-6 rounded-lg">

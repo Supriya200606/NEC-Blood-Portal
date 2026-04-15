@@ -63,16 +63,16 @@ const Navbar = () => {
       >
         <div className="bg-[#A3151A] flex justify-between items-center text-xl text-white">
           <div className="p-4 flex items-center gap-6">
-            <img
-              src={logo}
-              alt="Logo"
-              className="shadow-black shadow-xl rounded-full cursor-pointer h-auto w-1/6"
-            />
+          <img 
+  src="/logo.jpeg" 
+  alt="Kongu Blood Portal Logo" 
+  style={{ height: "50px", width: "50px", borderRadius: "50%" }}
+/>
             <h1
               className="text-3xl font-bold cursor-pointer"
               onClick={() => navigate("/home")}
             >
-              NEC Blood Portal
+              Kongu Blood Portal
             </h1>
           </div>
 
